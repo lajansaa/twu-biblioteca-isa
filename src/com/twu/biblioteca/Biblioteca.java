@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Biblioteca {
     private ArrayList<String> menu = new ArrayList<String>();
+    private ArrayList<String> bookList = new ArrayList<String>();
     private boolean running = true;
 
     public Biblioteca () {
