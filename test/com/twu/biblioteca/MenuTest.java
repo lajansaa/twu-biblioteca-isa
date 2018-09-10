@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import org.junit.After;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,11 +31,25 @@ public class MenuTest {
     private Menu mockMenu = new Menu();
     private CreateMockMenuOption mockMenuOption = new CreateMockMenuOption();
 
+    enum Type {CheckWithinRangeTest, CheckUserInputTest, DUMMYTEST};
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                {Type.DUMMYTEST, "dummy", true},
+                {Type.CheckWithinRangeTest, "1", true},
+                {Type.CheckWithinRangeTest, "2", false},
+                {Type.CheckWithinRangeTest, "invalid", false},
+                {Type.CheckUserInputTest, "q", false},
+                {Type.CheckUserInputTest, "b", true},
+                {Type.CheckUserInputTest, "invalid", true}
+        });
+    }
+    private Type type;
     private String input;
-
     private boolean expected;
 
-    public MenuTest(String input, boolean expected) {
+    public MenuTest(Type type, String input, boolean expected) {
+        this.type = type;
         this.input = input;
         this.expected = expected;
     }
@@ -56,6 +71,7 @@ public class MenuTest {
 
     @Test
     public void getList() {
+        Assume.assumeTrue(type == MenuTest.Type.DUMMYTEST);
         ArrayList<MenuOption> mockList = new ArrayList<MenuOption>();
         mockList.add(mockMenuOption);
         assertEquals(mockList, mockMenu.getList());
@@ -63,20 +79,21 @@ public class MenuTest {
 
     @Test
     public void printMenu() {
+        Assume.assumeTrue(type == MenuTest.Type.DUMMYTEST);
         mockMenu.printMenu();
         assertEquals("1. Test Mock\n", outContent.toString());
     }
 
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                {"1", true},
-                {"2", false}
-        });
+    @Test
+    public void checkWithinRange() {
+        Assume.assumeTrue(type == MenuTest.Type.CheckWithinRangeTest);
+        assertEquals(expected, mockMenu.checkWithinRange(input));
     }
 
     @Test
-    public void checkWithinRange() {
-        assertEquals(expected, mockMenu.checkWithinRange(input));
+    public void checkUserInput() {
+        Assume.assumeTrue(type == MenuTest.Type.CheckUserInputTest);
+        assertEquals(expected, mockMenu.checkUserInput(input));
     }
+
 }

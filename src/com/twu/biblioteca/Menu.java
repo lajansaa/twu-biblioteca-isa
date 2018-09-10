@@ -27,11 +27,30 @@ public class Menu {
     }
 
     public boolean checkWithinRange(String userInput) {
-        int userInputInt = Integer.parseInt(userInput);
-        if (userInputInt > 0 && userInputInt <= list.size()) {
-            return true;
-        } else {
+        int userInputInt;
+        if (userInput.matches("[0-9]+")) {
+            userInputInt = Integer.parseInt(userInput);
+            if (userInputInt > 0 && userInputInt <= list.size()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkUserInput(String userInput) {
+        System.out.println(" ");
+        if (userInput.equals("q")) {
             return false;
+        } else if (userInput.equals("b")) {
+            System.out.println("This is the home page. Please select a valid menu option!");
+            System.out.println(" ");
+            return true;
+        } else if (checkWithinRange(userInput)) {
+            return list.get(Integer.parseInt(userInput) - 1).start();
+        } else {
+            System.out.println("Please select a valid option!");
+            System.out.println(" ");
+            return true;
         }
     }
 
@@ -46,15 +65,7 @@ public class Menu {
             Helper helper = new Helper();
             String userInput = helper.getUserInput("What would you like to do? ").toLowerCase();
 
-            if (userInput.equals("q")) {
-                running = false;
-            } else if (userInput.equals("b")) {
-                System.out.println("This is the home page. Please select a valid menu option!");
-            } else if (checkWithinRange(userInput)) {
-                running = list.get(Integer.parseInt(userInput) - 1).start();
-            } else {
-                System.out.println("Please select a valid option!");
-            }
+            running = checkUserInput(userInput);
         }
     }
 }
