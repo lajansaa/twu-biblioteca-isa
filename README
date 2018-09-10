@@ -1,3 +1,29 @@
+Project Structure
+=================
+
+1. BibliotecaApp.java:
+   - Contains main()
+   - Instantiates biblioteca
+   - Calls biblioteca's start method
+2. Biblitoeca.java:
+   - Instantiates menu
+   - Calls menu's start method
+3. Menu.java:
+   - Contains menu options (interface) where start methods can be called
+4. MenuOption.java:
+   - 2 methods to implement: getMenuOptionTitle() and start()
+5. BookList.java:
+   - A menu option that implements MenuOption interface
+   - bookList instance variable contains a list of books
+   - Contains methods that allow users to list, borrow and return books
+6. Book.java:
+   - Contains methods to set title, year published and availability of book
+7. Helper.java:
+   - Reads user's command line input
+
+
+
+
 Instructions to push your code to code.google.com
 =================================================
 1. Sign into GitHub and create a new repository
