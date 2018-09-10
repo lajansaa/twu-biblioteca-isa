@@ -15,7 +15,11 @@ public class BookList implements MenuOption {
 
     public void printBookList() {
         for (int i = 0; i < bookList.size(); i++) {
-            System.out.println((i + 1) + ". " + bookList.get(i).getTitle() + ", " + bookList.get(i).getYearPublished());
+            String output = (i + 1) + ". ";
+            output += bookList.get(i).getTitle();
+            output += "(" + bookList.get(i).getYearPublished() + "): ";
+            output += bookList.get(i).isAvailable() ? "Available" : "Not Available";
+            System.out.println(output);
         }
     }
 
@@ -26,47 +30,23 @@ public class BookList implements MenuOption {
         System.out.println(" ");
     }
 
-    public String borrowBook(String bookIndex) {
-        return "Book borrowed successfully";
-    }
-
-    public String returnBook(String bookIndex) {
-        return "Book returned successfully";
-    }
-
-    public boolean start() {
-
-        boolean running = true;
-        Helper helper = new Helper();
-        String userInput = null;
-
-        printDescription();
-
-        while (running) {
-            printBookList();
-
-            userInput = helper.getUserInput("What would you like to do? ").toLowerCase();
-
-            if (userInput.equals("q") || userInput.equals("b")) {
-                running = false;
-            } else if (isBorrow(userInput)) {
-                if (isBookValid(userInput)) {
-
-                } else {
-
-                }
-                System.out.println(borrowBook("1"));
-            } else if (userInput.equals("return")) {
-                System.out.println(returnBook("1"));
-            } else {
-                System.out.println("Please select a valid option!");
-            }
-        }
-
-        if (userInput.equals("q")) {
-            return false;
+    public void borrowBook(int bookIndex) {
+        Book book = bookList.get(bookIndex);
+        if (book.isAvailable()) {
+            book.setAvailability(false);
+            System.out.println("Thank you! Enjoy the book!");
         } else {
-            return true;
+            System.out.println("That book is not available.");
+        }
+    }
+
+    public void returnBook(int bookIndex) {
+        Book book = bookList.get(bookIndex);
+        if (!book.isAvailable()) {
+            book.setAvailability(true);
+            System.out.println("Thank you for returning the book.");
+        } else {
+            System.out.println("That is not a valid book to return.");
         }
     }
 
@@ -77,11 +57,71 @@ public class BookList implements MenuOption {
         return false;
     }
 
-    public boolean isBookValid(String input) {
-        int bookNumber = Integer.parseInt(input.replaceAll("(borrow )(\\d+)", "$2"));
-        if (bookNumber > 0 && bookNumber <= bookList.size()) {
+    public boolean isReturn(String input) {
+        if (input.matches("return \\d+")) {
             return true;
         }
         return false;
+    }
+
+    public boolean isBookValid(String input) {
+        int bookNumber = getBookIndex(input);
+        if (bookNumber >= 0 && bookNumber < bookList.size()) {
+            return true;
+        }
+        return false;
+    }
+
+    public int getBookIndex(String input) {
+        return Integer.parseInt(input.replaceAll("(\\D{6}\\s)(\\d+)", "$2")) - 1;
+    }
+
+    public boolean checkUserInput(String userInput) {
+        System.out.println(" ");
+        if (userInput.equals("q") || userInput.equals("b")) {
+            return false;
+        } else if (isBorrow(userInput)) {
+            if (isBookValid(userInput)) {
+                int bookIndex = getBookIndex(userInput);
+                borrowBook(bookIndex);
+            } else {
+                System.out.println("That book is not available.");
+            }
+        } else if (isReturn(userInput)) {
+            if (isBookValid(userInput)) {
+                int bookIndex = getBookIndex(userInput);
+                returnBook(bookIndex);
+            } else {
+                System.out.println("That is not a valid book to return.");
+            }
+        } else {
+            System.out.println("Select a valid option!");
+        }
+        System.out.println(" ");
+        return true;
+    }
+
+    public boolean start() {
+
+        boolean running = true;
+
+        String userInput = null;
+
+        printDescription();
+
+        while (running) {
+            printBookList();
+
+            Helper helper = new Helper();
+            userInput = helper.getUserInput("What would you like to do? ").toLowerCase();
+
+            running = checkUserInput(userInput);
+        }
+
+        if (userInput.equals("q")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -4,6 +4,7 @@ import java.io.*;
 public class Helper {
     public String getUserInput(String prompt) {
         String inputLine = null;
+        System.out.println(" ");
         System.out.print(prompt + " ");
         try {
             BufferedReader is = new BufferedReader(new InputStreamReader(System.in));

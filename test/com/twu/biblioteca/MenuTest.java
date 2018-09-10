@@ -31,11 +31,11 @@ public class MenuTest {
     private Menu mockMenu = new Menu();
     private CreateMockMenuOption mockMenuOption = new CreateMockMenuOption();
 
-    enum Type {CheckWithinRangeTest, CheckUserInputTest, DUMMYTEST};
+    enum Type {CheckWithinRangeTest, CheckUserInputTest, DummyTest};
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {Type.DUMMYTEST, "dummy", true},
+                {Type.DummyTest, "dummy", true},
                 {Type.CheckWithinRangeTest, "1", true},
                 {Type.CheckWithinRangeTest, "2", false},
                 {Type.CheckWithinRangeTest, "invalid", false},
@@ -71,7 +71,7 @@ public class MenuTest {
 
     @Test
     public void getList() {
-        Assume.assumeTrue(type == MenuTest.Type.DUMMYTEST);
+        Assume.assumeTrue(type == Type.DummyTest);
         ArrayList<MenuOption> mockList = new ArrayList<MenuOption>();
         mockList.add(mockMenuOption);
         assertEquals(mockList, mockMenu.getList());
@@ -79,20 +79,20 @@ public class MenuTest {
 
     @Test
     public void printMenu() {
-        Assume.assumeTrue(type == MenuTest.Type.DUMMYTEST);
+        Assume.assumeTrue(type == Type.DummyTest);
         mockMenu.printMenu();
         assertEquals("1. Test Mock\n", outContent.toString());
     }
 
     @Test
     public void checkWithinRange() {
-        Assume.assumeTrue(type == MenuTest.Type.CheckWithinRangeTest);
+        Assume.assumeTrue(type == Type.CheckWithinRangeTest);
         assertEquals(expected, mockMenu.checkWithinRange(input));
     }
 
     @Test
     public void checkUserInput() {
-        Assume.assumeTrue(type == MenuTest.Type.CheckUserInputTest);
+        Assume.assumeTrue(type == Type.CheckUserInputTest);
         assertEquals(expected, mockMenu.checkUserInput(input));
     }
 

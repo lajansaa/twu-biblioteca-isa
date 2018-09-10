@@ -22,14 +22,19 @@ public class BookListTest {
     private BookList mockBookList = new BookList();
     private Book mockBook = new Book();
 
-    enum Type {ISBORROWTEST, ISBOOKVALIDTEST};
+    enum Type {IsBorrowTest, IsBookValidTest, CheckUserInputTest, DummyTest};
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {Type.ISBORROWTEST, "borrow 1", true},
-                {Type.ISBORROWTEST, "borrow1", false},
-                {Type.ISBOOKVALIDTEST, "borrow 1", true},
-                {Type.ISBOOKVALIDTEST, "borrow 2", false},
+                {Type.DummyTest, "dummy", true},
+                {Type.IsBorrowTest, "borrow 1", true},
+                {Type.IsBorrowTest, "borrow1", false},
+                {Type.IsBookValidTest, "borrow 1", true},
+                {Type.IsBookValidTest, "borrow 2", false},
+                {Type.CheckUserInputTest, "q", false},
+                {Type.CheckUserInputTest, "b", false},
+                {Type.CheckUserInputTest, "borrow 1", true},
+                {Type.CheckUserInputTest, "invalid", true}
         });
     }
     private Type type;
@@ -61,19 +66,54 @@ public class BookListTest {
 
     @Test
     public void printBookList() {
+        Assume.assumeTrue(type == Type.DummyTest);
         mockBookList.printBookList();
-        assertEquals("1. Mock Book, 2018\n", outContent.toString());
+        assertEquals("1. Mock Book(2018): Available\n", outContent.toString());
     }
 
     @Test
     public void isBorrow() {
-        Assume.assumeTrue(type == Type.ISBORROWTEST);
+        Assume.assumeTrue(type == Type.IsBorrowTest);
         assertEquals(expected, mockBookList.isBorrow(input));
     }
 
     @Test
+    public void getBookIndex() {
+        Assume.assumeTrue(type == Type.DummyTest);
+        assertEquals(0, mockBookList.getBookIndex("borrow 1"));
+    }
+
+    @Test
     public void isBookValid() {
-        Assume.assumeTrue(type == Type.ISBOOKVALIDTEST);
+        Assume.assumeTrue(type == Type.IsBookValidTest);
         assertEquals(expected, mockBookList.isBookValid(input));
+    }
+
+    @Test
+    public void borrowBook() {
+        Assume.assumeTrue(type == Type.DummyTest);
+        mockBook.setAvailability(true);
+        mockBookList.borrowBook(0);
+        assertEquals("Thank you! Enjoy the book!\n", outContent.toString());
+    }
+
+    @Test
+    public void isReturn() {
+        Assume.assumeTrue(type == Type.DummyTest);
+        assertEquals(true, mockBookList.isReturn("return 1"));
+    }
+
+    @Test
+    public void returnBook() {
+        Assume.assumeTrue(type == Type.DummyTest);
+        mockBook.setAvailability(false);
+        mockBookList.returnBook(0);
+        assertEquals("Thank you for returning the book.\n", outContent.toString());
+    }
+
+    @Test
+    public void checkUserInput() {
+        Assume.assumeTrue(type == Type.CheckUserInputTest);
+        assertEquals(expected, mockBookList.checkUserInput(input));
     }
 }

@@ -43,15 +43,13 @@ public class Menu {
             return false;
         } else if (userInput.equals("b")) {
             System.out.println("This is the home page. Please select a valid menu option!");
-            System.out.println(" ");
-            return true;
         } else if (checkWithinRange(userInput)) {
             return list.get(Integer.parseInt(userInput) - 1).start();
         } else {
             System.out.println("Please select a valid option!");
-            System.out.println(" ");
-            return true;
         }
+        System.out.println(" ");
+        return true;
     }
 
     public void start() {
