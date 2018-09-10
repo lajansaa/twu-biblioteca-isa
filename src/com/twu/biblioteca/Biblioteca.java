@@ -2,13 +2,29 @@ package com.twu.biblioteca;
 import java.util.*;
 
 public class Biblioteca {
-    private ArrayList<String> menu = new ArrayList<String>();
-    private ArrayList<String> bookList = new ArrayList<String>();
+    private Menu menu = new Menu();
+    private BookList bookList = new BookList();
     private boolean running = true;
 
     public Biblioteca () {
+        initialiseBookList();
         initialiseMenu();
-        initialiseCatalog();
+    }
+
+    public void initialiseBookList() {
+        ArrayList<String> titleList = new ArrayList<String>(Arrays.asList("Murder on Orient Expressway", "The ABC Murders", "Crooked House"));
+        ArrayList<String> yearPublishedList = new ArrayList<String>(Arrays.asList("1934", "1936", "1949"));
+        for (int i = 0; i < titleList.size(); i++) {
+            Book book = new Book();
+            book.setTitle(titleList.get(i));
+            book.setYearPublished(yearPublishedList.get(i));
+            bookList.addBook(book);
+        }
+    }
+
+    public void initialiseMenu() {
+        menu.addMenuOption(bookList);
+
     }
 
     public void printWelcomeMessage() {
@@ -19,38 +35,9 @@ public class Biblioteca {
         System.out.println(" ");
     }
 
-    public void printMenu() {
-        System.out.println("Menu");
-        System.out.println("----");
-        System.out.println("Type the number of an action you would like to take:");
-        System.out.println(" ");
-        for (int i = 0; i < menu.size(); i++) {
-            System.out.println((i + 1) + ". " + menu.get(i));
-        }
-        System.out.println(" ");
-    }
-
-    public void initialiseMenu() {
-        menu.add("List Books");
-    }
-
-    public void initialiseCatalog() {
-
-    }
-
     public void startBiblioteca() {
         printWelcomeMessage();
-        printMenu();
-        Helper helper = new Helper();
-
-        while (running) {
-            String userInput = helper.getUserInput("What would you like to do? ");
-            if (userInput.equals("1")) {
-
-            }
-            if (userInput.equals("q")) {
-                running = false;
-            }
-        }
+        menu.start();
+        System.out.println("See you again soon!");
     }
 }
