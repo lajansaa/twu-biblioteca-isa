@@ -1,27 +1,8 @@
 package com.twu.biblioteca;
 
-public class Movie {
-    private String title;
-    private String yearReleased;
+public class Movie extends Item {
     private String director;
     private String rating = "unrated";
-    private boolean availability = true;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getYearReleased() {
-        return yearReleased;
-    }
-
-    public void setYearReleased(String yearReleased) {
-        this.yearReleased = yearReleased;
-    }
 
     public String getDirector() {
         return director;
@@ -39,11 +20,4 @@ public class Movie {
         this.rating = rating;
     }
 
-    public boolean isAvailable() {
-        return availability;
-    }
-
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
-    }
 }

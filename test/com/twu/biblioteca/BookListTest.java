@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class BookListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
     private BookList mockBookList = new BookList();
     private Book mockBook = new Book();
 
@@ -55,19 +54,14 @@ public class BookListTest {
     @Before
     public void addMockBook() {
         mockBook.setTitle("Mock Book");
-        mockBook.setYearPublished("2018");
-        mockBookList.addBook(mockBook);
-    }
-
-    @After
-    public void restoreStreams() {
-        System.setOut(originalOut);
+        mockBook.setYear("2018");
+        mockBookList.addItem(mockBook);
     }
 
     @Test
     public void printBookList() {
         Assume.assumeTrue(type == Type.DummyTest);
-        mockBookList.printBookList();
+        mockBookList.printList();
         assertEquals("1. Mock Book(2018): Available\n", outContent.toString());
     }
 
@@ -80,20 +74,20 @@ public class BookListTest {
     @Test
     public void getBookIndex() {
         Assume.assumeTrue(type == Type.DummyTest);
-        assertEquals(0, mockBookList.getBookIndex("borrow 1"));
+        assertEquals(0, mockBookList.getItemIndex("borrow 1"));
     }
 
     @Test
     public void isBookValid() {
         Assume.assumeTrue(type == Type.IsBookValidTest);
-        assertEquals(expected, mockBookList.isBookValid(input));
+        assertEquals(expected, mockBookList.isItemValid(input));
     }
 
     @Test
     public void borrowBook() {
         Assume.assumeTrue(type == Type.DummyTest);
         mockBook.setAvailability(true);
-        mockBookList.borrowBook(0);
+        mockBookList.borrowItem(0);
         assertEquals("Thank you! Enjoy the book!\n", outContent.toString());
     }
 
@@ -107,7 +101,7 @@ public class BookListTest {
     public void returnBook() {
         Assume.assumeTrue(type == Type.DummyTest);
         mockBook.setAvailability(false);
-        mockBookList.returnBook(0);
+        mockBookList.returnItem(0);
         assertEquals("Thank you for returning the book.\n", outContent.toString());
     }
 

@@ -15,9 +15,9 @@ public class BookTest {
     }
 
     @Test
-    public void getYearPublished() {
-        book.setYearPublished("1967");
-        assertEquals("1967", book.getYearPublished());
+    public void getYear() {
+        book.setYear("1967");
+        assertEquals("1967", book.getYear());
     }
 
     @Test
