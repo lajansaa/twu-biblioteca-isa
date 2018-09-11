@@ -5,6 +5,7 @@ public class Movie {
     private String yearReleased;
     private String director;
     private String rating = "unrated";
+    private boolean availability = true;
 
     public String getTitle() {
         return title;
@@ -36,5 +37,13 @@ public class Movie {
 
     public void setRating(String rating) {
         this.rating = rating;
+    }
+
+    public boolean isAvailable() {
+        return availability;
+    }
+
+    public void setAvailability(boolean availability) {
+        this.availability = availability;
     }
 }

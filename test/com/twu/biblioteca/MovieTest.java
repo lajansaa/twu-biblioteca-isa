@@ -30,6 +30,9 @@ public class MovieTest {
         assertEquals("unrated", mockMovie.getRating());
     }
 
-
-
+    @Test
+    public void isAvailable() {
+        mockMovie.setAvailability(false);
+        assertEquals(false, mockMovie.isAvailable());
+    }
 }
