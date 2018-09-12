@@ -33,7 +33,7 @@ public class User {
         this.password = password;
     }
 
-    public void isLogin(boolean loginStatus) {
+    public void setLoginStatus(boolean loginStatus) {
         this.loginStatus = loginStatus;
     }
 

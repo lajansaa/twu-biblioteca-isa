@@ -17,7 +17,7 @@ public class UserTest {
         mockUser.setRole("librarian");
         mockUser.setLibraryNumber("123-1234");
         mockUser.setPassword("password");
-        mockUser.isLogin(true);
+        mockUser.setLoginStatus(true);
     }
 
     @Test
