@@ -4,6 +4,7 @@ public class Item {
     private String title;
     private String year;
     private boolean availability = true;
+    private User borrower = null;
 
     public void setTitle(String title) {
         this.title = title;
@@ -27,5 +28,13 @@ public class Item {
 
     public boolean isAvailable() {
         return availability;
+    }
+
+    public void setBorrower(User borrower) {
+        this.borrower = borrower;
+    }
+
+    public User getBorrower() {
+        return borrower;
     }
 }

@@ -6,6 +6,7 @@ public class Helper {
         String inputLine = null;
         System.out.println(" ");
         System.out.print(prompt + " ");
+        System.out.println(" ");
         try {
             BufferedReader is = new BufferedReader(new InputStreamReader(System.in));
             inputLine = is.readLine();
