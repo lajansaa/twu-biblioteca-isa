@@ -6,22 +6,36 @@ Project Structure
    - Instantiates biblioteca
    - Calls biblioteca's start method
 2. Biblitoeca.java:
-   - Instantiates menu
+   - Instantiates menu and menuOptions
+   - Tracks if a user is logged in
    - Calls menu's start method
 3. Menu.java:
    - Contains menu options (interface) where start methods can be called
 4. MenuOption.java:
    - 2 methods to implement: getMenuOptionTitle() and start()
-5. BookList.java:
-   - A menu option that implements MenuOption interface
-   - bookList instance variable contains a list of books
-   - Contains methods that allow users to list, borrow and return books
-6. Book.java:
-   - Contains methods to set title, year published and availability of book
+5. ItemList.java:
+    - A menu option that implements MenuOption interface
+    - A superclass of BookList.java and MovieList.java
+    - Has an instance variable itemList that holds item objects
+    - Contains methods that allow users to print items in list, borrow and return items
+6. Item.java:
+    - Contains methods to set title, year published and availability of item
+    - A superclass of Book.java and Movie.java
 7. Helper.java:
    - Reads user's command line input
-
-
+8. User.java:
+   - Contains instance variables name, email, number, role, loggedInStatus, libraryNumber, password
+   - To log in as librarian (libraryNumber: 987-9876, password: librarian)
+   - To log in as customer (libraryNumber: 123-1234, password: customer)
+9. Profile.java:
+   - A menu option that implements MenuOption interface
+   - Contains methods that displays user information only when logged in
+10. Login.java:
+    - A menu option that implements MenuOption interface
+    - Contains methods that validates user
+11. Logout.java:
+    - A menu option that implements MenuOption interface
+    - Contains methods that logs user out
 
 
 Instructions to push your code to code.google.com
