@@ -20,6 +20,7 @@ public class Menu {
     }
 
     public void printDescription() {
+        System.out.println(" ");
         System.out.println("Menu");
         System.out.println("----");
         System.out.println("Type the number of an action you would like to take:");
@@ -47,27 +48,37 @@ public class Menu {
         list.removeAll(toRemove);
     }
 
-    public boolean checkUserInput(String userInput) {
-        System.out.println(" ");
-        if (userInput.equals("q")) {
+    public boolean checkMenuOptionResult(String result) {
+        if (result.equals("quit")) {
             return false;
-        } else if (userInput.equals("b")) {
+        } else if (result.equals("login")) {
+            removeMenuOption("Login");
+        } else if (result.equals("logout")) {
+            removeMenuOption("My Profile");
+            removeMenuOption("Logout");
+        }
+        return true;
+    }
+
+    public boolean checkUserInput(String userInput) {
+        if (userInput.equals("quit")) {
+            return false;
+        } else if (userInput.equals("back")) {
             System.out.println("This is the home page. Please select a valid menu option!");
         } else if (checkWithinRange(userInput)) {
-            return list.get(Integer.parseInt(userInput) - 1).start();
+            String result = list.get(Integer.parseInt(userInput) - 1).start();
+            return checkMenuOptionResult(result);
         } else {
             System.out.println("Please select a valid option!");
         }
-        System.out.println(" ");
         return true;
     }
 
     public void start() {
         boolean running = true;
 
-        printDescription();
-
         while (running) {
+            printDescription();
             printMenu();
 
             Helper helper = new Helper();

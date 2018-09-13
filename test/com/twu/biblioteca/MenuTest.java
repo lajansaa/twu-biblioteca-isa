@@ -19,8 +19,8 @@ class CreateMockMenuOption implements MenuOption {
         return "Mock Option";
     }
     public void printDescription() {}
-    public boolean start() {
-        return true;
+    public String start() {
+        return "back";
     }
     public boolean checkUserInput(String userInput) {
         return true;

@@ -12,13 +12,14 @@ public class Profile implements MenuOption {
     }
 
     public void printDescription() {
+        System.out.println(" ");
         System.out.println("My Profile");
         System.out.println("----------");
         System.out.println(" ");
     }
 
     public boolean checkUserInput(String userInput) {
-        if (userInput.equals("q") || userInput.equals("b")) {
+        if (userInput.equals("quit") || userInput.equals("back")) {
             return false;
         } else {
             System.out.println("That's an invalid option!");
@@ -33,7 +34,7 @@ public class Profile implements MenuOption {
         System.out.println("Number: " + user.getNumber());
     }
 
-    public boolean start() {
+    public String start() {
 
         boolean running = true;
 
@@ -45,16 +46,12 @@ public class Profile implements MenuOption {
             printProfile();
 
             Helper helper = new Helper();
-            userInput = helper.getUserInput("What would you like to do? ").toLowerCase();
+            userInput = helper.getUserInput("What would you like to do? (back/quit)").toLowerCase();
 
             running = checkUserInput(userInput);
         }
 
-        if (userInput.equals("q")) {
-            return false;
-        } else {
-            return true;
-        }
+        return userInput;
     }
 
 }

@@ -31,35 +31,25 @@ public class ItemList implements MenuOption {
             output += itemList.get(i).getTitle();
             output += "(" + itemList.get(i).getYear() + "): ";
             output += itemList.get(i).isAvailable() ? "Available" : "Not Available";
+            if (bib.getLoggedInUser() != null) {
+                if (bib.getLoggedInUser().getRole().equals("librarian") && !itemList.get(i).isAvailable()) {
+                    output += " (Borrowed by: " + itemList.get(i).getBorrower().getName() + " - " + itemList.get(i).getBorrower().getNumber() + ") ";
+                }
+            }
             System.out.println(output);
         }
     }
 
     public void printDescription() {
+        System.out.println(" ");
         System.out.println(itemListName + " List");
         System.out.println("---------");
-        System.out.println("To borrow a " + itemListName.toLowerCase() + ", type borrow <" + itemListName.toLowerCase() + " number>. Likewise to return a item, type return <" + itemListName.toLowerCase() + " number>.");
+        if (isLoggedIn()) {
+            System.out.println("You need to login to borrow or return a book.");
+        } else {
+            System.out.println("To borrow a " + itemListName.toLowerCase() + ", type borrow <" + itemListName.toLowerCase() + " number>. Likewise to return a item, type return <" + itemListName.toLowerCase() + " number>.");
+        }
         System.out.println(" ");
-    }
-
-    public void borrowItem(int itemIndex) {
-        Item item = itemList.get(itemIndex);
-        if (item.isAvailable()) {
-            item.setAvailability(false);
-            System.out.println("Thank you! Enjoy the " + itemListName.toLowerCase() + "!");
-        } else {
-            System.out.println("That " + itemListName.toLowerCase() + " is not available.");
-        }
-    }
-
-    public void returnItem(int itemIndex) {
-        Item item = itemList.get(itemIndex);
-        if (!item.isAvailable()) {
-            item.setAvailability(true);
-            System.out.println("Thank you for returning the " + itemListName.toLowerCase() + ".");
-        } else {
-            System.out.println("That is not a valid " + itemListName.toLowerCase() + " to return.");
-        }
     }
 
     public boolean isBorrow(String input) {
@@ -76,6 +66,10 @@ public class ItemList implements MenuOption {
         return false;
     }
 
+    public boolean isLoggedIn() {
+        return bib.getLoggedInUser() == null;
+    }
+
     public boolean isItemValid(String input) {
         int itemNumber = getItemIndex(input);
         if (itemNumber >= 0 && itemNumber < itemList.size()) {
@@ -88,24 +82,62 @@ public class ItemList implements MenuOption {
         return Integer.parseInt(input.replaceAll("(\\D{6}\\s)(\\d+)", "$2")) - 1;
     }
 
+    public void tryBorrow(String userInput) {
+        if (isLoggedIn()) {
+            System.out.println("You need to login to borrow a book.");
+        } else if (isItemValid(userInput)) {
+            int itemIndex = getItemIndex(userInput);
+            borrowItem(itemIndex);
+        } else {
+            System.out.println("That " + itemListName.toLowerCase() + " is not available.");
+        }
+    }
+
+    public void tryReturn(String userInput) {
+        if (isLoggedIn()) {
+            System.out.println("You need to login to return a book.");
+        } else if (isItemValid(userInput)) {
+            int itemIndex = getItemIndex(userInput);
+            returnItem(itemIndex);
+        } else {
+            System.out.println("That is not a valid " + itemListName.toLowerCase() + " to return.");
+        }
+    }
+
+    public void borrowItem(int itemIndex) {
+        Item item = itemList.get(itemIndex);
+        if (item.isAvailable()) {
+            item.setBorrower(bib.getLoggedInUser());
+            item.setAvailability(false);
+            System.out.println("Thank you! Enjoy the " + itemListName.toLowerCase() + "!");
+        } else {
+            System.out.println("That " + itemListName.toLowerCase() + " is not available.");
+        }
+    }
+
+    public void returnItem(int itemIndex) {
+        Item item = itemList.get(itemIndex);
+        if (!item.isAvailable()) {
+            if (bib.getLoggedInUser() == item.getBorrower()) {
+                item.setBorrower(null);
+                item.setAvailability(true);
+                System.out.println("Thank you for returning the " + itemListName.toLowerCase() + ".");
+            } else {
+                System.out.println("You are not the borrower of this book.");
+            }
+        } else {
+            System.out.println("That is not a valid " + itemListName.toLowerCase() + " to return.");
+        }
+    }
+
     public boolean checkUserInput(String userInput) {
         System.out.println(" ");
-        if (userInput.equals("q") || userInput.equals("b")) {
+        if (userInput.equals("quit") || userInput.equals("back")) {
             return false;
         } else if (isBorrow(userInput)) {
-            if (isItemValid(userInput)) {
-                int itemIndex = getItemIndex(userInput);
-                borrowItem(itemIndex);
-            } else {
-                System.out.println("That " + itemListName.toLowerCase() + " is not available.");
-            }
+            tryBorrow(userInput);
         } else if (isReturn(userInput)) {
-            if (isItemValid(userInput)) {
-                int itemIndex = getItemIndex(userInput);
-                returnItem(itemIndex);
-            } else {
-                System.out.println("That is not a valid " + itemListName.toLowerCase() + " to return.");
-            }
+            tryReturn(userInput);
         } else {
             System.out.println("Select a valid option!");
         }
@@ -113,15 +145,12 @@ public class ItemList implements MenuOption {
         return true;
     }
 
-    public boolean start() {
-
+    public String start() {
         boolean running = true;
-
         String userInput = null;
 
-        printDescription();
-
         while (running) {
+            printDescription();
             printList();
 
             Helper helper = new Helper();
@@ -130,10 +159,6 @@ public class ItemList implements MenuOption {
             running = checkUserInput(userInput);
         }
 
-        if (userInput.equals("q")) {
-            return false;
-        } else {
-            return true;
-        }
+        return userInput;
     }
 }
