@@ -10,8 +10,10 @@ import static org.junit.Assert.*;
 
 public class MovieListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private Biblioteca bib = new Biblioteca();
+    private MovieList mockMovieList = new MovieList(bib);
     private Movie mockMovie = new Movie();
-    private MovieList mockMovieList = new MovieList(null);
+    User mockUser = new User();
 
     @Before
     public void setUpStreams() {
@@ -24,12 +26,27 @@ public class MovieListTest {
         mockMovie.setYear("2018");
         mockMovie.setDirector("Mock Director");
         mockMovie.setRating("5");
+        mockMovie.setAvailability(false);
+        mockMovie.setBorrower(mockUser);
         mockMovieList.addItem(mockMovie);
+    }
+
+    @Before
+    public void setLoggedInUser() {
+        mockUser.setName("Mock Name");
+        mockUser.setRole("librarian");
+        mockUser.setNumber("9876543");
+        bib.setLoggedInUser(mockUser);
+    }
+
+    @Test
+    public void isLibrarianAndItemNotAvailable() {
+        assertEquals(true, mockMovieList.isLibrarianAndItemNotAvailable(0));
     }
 
     @Test
     public void printList() {
         mockMovieList.printList();
-        assertEquals("1. Mock Title (2018), Mock Director, 5/10: Available\n", outContent.toString());
+        assertEquals("1. Mock Title (2018), Mock Director, 5/10: Not Available (Borrowed by: Mock Name - 9876543)\n", outContent.toString());
     }
 }
