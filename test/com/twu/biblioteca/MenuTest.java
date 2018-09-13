@@ -1,6 +1,5 @@
 package com.twu.biblioteca;
 
-import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +16,7 @@ import static org.junit.Assert.*;
 
 class CreateMockMenuOption implements MenuOption {
     public String getMenuOptionTitle() {
-        return "Test Mock";
+        return "Mock Option";
     }
     public void printDescription() {}
     public boolean start() {
@@ -31,7 +30,6 @@ class CreateMockMenuOption implements MenuOption {
 @RunWith(Parameterized.class)
 public class MenuTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
     private Menu mockMenu = new Menu();
     private CreateMockMenuOption mockMenuOption = new CreateMockMenuOption();
 
@@ -68,11 +66,6 @@ public class MenuTest {
         mockMenu.addMenuOption(mockMenuOption);
     }
 
-    @After
-    public void restoreStreams() {
-        System.setOut(originalOut);
-    }
-
     @Test
     public void getList() {
         Assume.assumeTrue(type == Type.DummyTest);
@@ -85,7 +78,7 @@ public class MenuTest {
     public void printMenu() {
         Assume.assumeTrue(type == Type.DummyTest);
         mockMenu.printMenu();
-        assertEquals("1. Test Mock\n", outContent.toString());
+        assertEquals("1. Mock Option\n", outContent.toString());
     }
 
     @Test
@@ -98,6 +91,13 @@ public class MenuTest {
     public void checkUserInput() {
         Assume.assumeTrue(type == Type.CheckUserInputTest);
         assertEquals(expected, mockMenu.checkUserInput(input));
+    }
+
+    @Test
+    public void removeMenuOption() {
+        Assume.assumeTrue(type == Type.DummyTest);
+        mockMenu.removeMenuOption("Mock Option");
+        assertEquals(0, mockMenu.getList().size());
     }
 
 }

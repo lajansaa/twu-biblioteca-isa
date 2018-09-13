@@ -38,11 +38,13 @@ public class Menu {
     }
 
     public void removeMenuOption(String menuOptionName) {
+        ArrayList<MenuOption> toRemove = new ArrayList<MenuOption>();
         for (MenuOption menuOption : list) {
             if (menuOption.getMenuOptionTitle().equals(menuOptionName)) {
-                list.remove(menuOption);
+                toRemove.add(menuOption);
             }
         }
+        list.removeAll(toRemove);
     }
 
     public boolean checkUserInput(String userInput) {
