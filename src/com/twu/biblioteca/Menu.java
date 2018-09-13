@@ -37,6 +37,14 @@ public class Menu {
         return false;
     }
 
+    public void removeMenuOption(String menuOptionName) {
+        for (MenuOption menuOption : list) {
+            if (menuOption.getMenuOptionTitle().equals(menuOptionName)) {
+                list.remove(menuOption);
+            }
+        }
+    }
+
     public boolean checkUserInput(String userInput) {
         System.out.println(" ");
         if (userInput.equals("q")) {
