@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class MovieListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private Movie mockMovie = new Movie();
-    private MovieList mockMovieList = new MovieList();
+    private MovieList mockMovieList = new MovieList(null);
 
     @Before
     public void setUpStreams() {

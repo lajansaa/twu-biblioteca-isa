@@ -6,9 +6,11 @@ import java.util.ArrayList;
 public class ItemList implements MenuOption {
     private ArrayList<Item> itemList = new ArrayList<Item>();
     private String itemListName;
+    private Biblioteca bib;
 
-    public ItemList(String itemListName) {
+    public ItemList(String itemListName, Biblioteca bib) {
         this.itemListName = itemListName;
+        this.bib = bib;
     }
 
     public String getMenuOptionTitle() {

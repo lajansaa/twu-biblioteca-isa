@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 public class MovieList extends ItemList {
     private ArrayList<Item> movieList;
+    private Biblioteca bib;
 
-    public MovieList() {
-        super("Movie");
+    public MovieList(Biblioteca bib) {
+        super("Movie", bib);
         this.movieList = this.getItemList();
+        this.bib = bib;
     }
 
     public void printList() {

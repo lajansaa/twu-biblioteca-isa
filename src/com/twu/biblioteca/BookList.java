@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class BookList extends ItemList {
 
-    public BookList() {
-        super("Book");
+    public BookList(Biblioteca bib) {
+        super("Book", bib);
     }
 
 }

@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class BookListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private BookList mockBookList = new BookList();
+    private BookList mockBookList = new BookList(null);
     private Book mockBook = new Book();
 
     enum Type {IsBorrowTest, IsBookValidTest, CheckUserInputTest, DummyTest};

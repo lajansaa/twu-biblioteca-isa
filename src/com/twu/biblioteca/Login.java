@@ -1,14 +1,10 @@
 package com.twu.biblioteca;
 
-import java.util.ArrayList;
-
 public class Login implements MenuOption {
-    private ArrayList<User> userList;
-    private Menu menu;
+    private Biblioteca bib;
 
-    public Login(ArrayList<User> userList, Menu menu) {
-        this.userList = userList;
-        this.menu = menu;
+    public Login(Biblioteca bib) {
+        this.bib = bib;
     }
 
     public String getMenuOptionTitle() {

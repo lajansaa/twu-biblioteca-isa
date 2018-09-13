@@ -3,10 +3,11 @@ import java.util.*;
 
 public class Biblioteca {
     private Menu menu = new Menu();
-    private BookList bookList = new BookList();
-    private MovieList movieList = new MovieList();
+    private BookList bookList = new BookList(this);
+    private MovieList movieList = new MovieList(this);
     private ArrayList<User> userList = new ArrayList<User>();
-    private Login login = new Login(userList, menu);
+    private User loggedInUser = null;
+    private Login login = new Login(this);
     private boolean running = true;
 
     public Biblioteca () {
@@ -74,6 +75,22 @@ public class Biblioteca {
         System.out.println("There's much you can do here!");
         System.out.println("At any point in time of your session with us, feel free to type b to go back to a previous page or type q to quit.");
         System.out.println(" ");
+    }
+
+    public ArrayList<User> getUserList() {
+        return userList;
+    }
+
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
+    }
+
+    public Menu getMenu() {
+        return menu;
     }
 
     public void startBiblioteca() {
