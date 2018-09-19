@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 public class BookListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private BookList mockBookList = new BookList(null);
-    private Book mockBook = new Book();
+    private Book mockBook = new Book("Mock Book", "2018");
 
     enum Type {IsBorrowTest, IsBookValidTest, CheckUserInputTest, DummyTest};
     @Parameterized.Parameters
@@ -53,8 +53,6 @@ public class BookListTest {
 
     @Before
     public void addMockBook() {
-        mockBook.setTitle("Mock Book");
-        mockBook.setYear("2018");
         mockBookList.addItem(mockBook);
     }
 

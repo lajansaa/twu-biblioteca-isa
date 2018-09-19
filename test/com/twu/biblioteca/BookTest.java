@@ -6,17 +6,15 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BookTest {
-    private Book book = new Book();
+    private Book book = new Book("Endless Nights", "1967" );
 
     @Test
     public void getBook() {
-        book.setTitle("Endless Nights");
         assertEquals("Endless Nights", book.getTitle());
     }
 
     @Test
     public void getYear() {
-        book.setYear("1967");
         assertEquals("1967", book.getYear());
     }
 

@@ -21,9 +21,7 @@ public class Biblioteca {
         ArrayList<String> titleList = new ArrayList<String>(Arrays.asList("Murder on Orient Expressway", "The ABC Murders", "Crooked House"));
         ArrayList<String> yearList = new ArrayList<String>(Arrays.asList("1934", "1936", "1949"));
         for (int i = 0; i < titleList.size(); i++) {
-            Book book = new Book();
-            book.setTitle(titleList.get(i));
-            book.setYear(yearList.get(i));
+            Book book = new Book(titleList.get(i), yearList.get(i));
             bookList.addItem(book);
         }
     }
@@ -34,11 +32,7 @@ public class Biblioteca {
        ArrayList<String> directorList = new ArrayList<String>(Arrays.asList("Byron Howard", "Don Hall", "Brad Bird"));
        ArrayList<String> ratingList = new ArrayList<String>(Arrays.asList("8", "7", "8"));
         for (int i = 0; i < titleList.size(); i++) {
-            Movie movie = new Movie();
-            movie.setTitle(titleList.get(i));
-            movie.setYear(yearList.get(i));
-            movie.setDirector(directorList.get(i));
-            movie.setRating(ratingList.get(i));
+            Movie movie = new Movie(titleList.get(i), yearList.get(i),directorList.get(i), ratingList.get(i));
             movieList.addItem(movie);
         }
     }

@@ -6,16 +6,13 @@ public class Item {
     private boolean availability = true;
     private User borrower = null;
 
-    public void setTitle(String title) {
+    public Item(String title, String year) {
         this.title = title;
+        this.year = year;
     }
 
     public String getTitle() {
         return title;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
     }
 
     public String getYear() {

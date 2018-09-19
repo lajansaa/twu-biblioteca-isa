@@ -12,7 +12,7 @@ public class MovieListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private Biblioteca bib = new Biblioteca();
     private MovieList mockMovieList = new MovieList(bib);
-    private Movie mockMovie = new Movie();
+    private Movie mockMovie = new Movie("Mock Title", "2018", "Mock Director", "5");
     User mockUser = new User();
 
     @Before
@@ -22,10 +22,6 @@ public class MovieListTest {
 
     @Before
     public void addMockMovie() {
-        mockMovie.setTitle("Mock Title");
-        mockMovie.setYear("2018");
-        mockMovie.setDirector("Mock Director");
-        mockMovie.setRating("5");
         mockMovie.setAvailability(false);
         mockMovie.setBorrower(mockUser);
         mockMovieList.addItem(mockMovie);

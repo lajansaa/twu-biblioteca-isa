@@ -5,11 +5,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class MovieTest {
-    Movie mockMovie = new Movie();
+    private Movie mockMovie = new Movie("Mock Title", "2018", "Mock Director");
 
     @Test
     public void getDirector() {
-        mockMovie.setDirector("Mock Director");
         assertEquals("Mock Director", mockMovie.getDirector());
     }
 
