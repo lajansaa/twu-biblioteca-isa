@@ -36,8 +36,13 @@ public class MovieListTest {
     }
 
     @Test
-    public void isLibrarianAndItemNotAvailable() {
-        assertEquals(true, mockMovieList.isLibrarianAndItemNotAvailable(0));
+    public void isLibrarian() {
+        assertEquals(true, mockMovieList.isLibrarian(0));
+    }
+
+    @Test
+    public void isItemUnavailable() {
+        assertEquals(true, mockMovieList.isItemUnavailable(0));
     }
 
     @Test
