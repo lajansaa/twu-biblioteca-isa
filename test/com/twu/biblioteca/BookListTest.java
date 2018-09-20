@@ -18,8 +18,10 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class BookListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private BookList mockBookList = new BookList(null);
+    private Biblioteca bib = new Biblioteca();
+    private BookList mockBookList = new BookList(bib);
     private Book mockBook = new Book("Mock Book", "2018");
+    private User mockUser = new User();
 
     enum Type {IsBorrowTest, IsBookValidTest, CheckUserInputTest, DummyTest};
     @Parameterized.Parameters
@@ -59,7 +61,7 @@ public class BookListTest {
     @Test
     public void printBookList() {
         Assume.assumeTrue(type == Type.DummyTest);
-        mockBookList.printList();
+        mockBookList.printList(null);
         assertEquals("1. Mock Book(2018): Available\n", outContent.toString());
     }
 

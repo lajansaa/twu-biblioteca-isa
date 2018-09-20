@@ -12,15 +12,7 @@ public class MovieList extends ItemList {
         this.bib = bib;
     }
 
-    public boolean isLibrarian(int i) {
-        return bib.getLoggedInUser().getRole().equals("librarian");
-    }
-
-    public boolean isItemUnavailable(int i) {
-        return !movieList.get(i).isAvailable();
-    }
-
-    public void printList() {
+    public void printList(User loggedInUser) {
         for (int i = 0; i < movieList.size(); i++) {
             String output = (i + 1) + ". ";
             Movie movie = (Movie) movieList.get(i);
@@ -29,8 +21,12 @@ public class MovieList extends ItemList {
             output += movie.getDirector() + ", ";
             output += movie.getRating() + "/10: ";
             output += movie.isAvailable() ? "Available" : "Not Available";
-            if (bib.getLoggedInUser() != null) {
-                if (isLibrarian(i) && isItemUnavailable(i)) {
+
+            boolean isLibrarian = loggedInUser.getRole().equals("librarian");
+            boolean isItemUnavailable = !movieList.get(i).isAvailable();
+
+            if (loggedInUser != null) {
+                if (isLibrarian && isItemUnavailable) {
                     output += " (Borrowed by: " + movieList.get(i).getBorrower().getName() + " - " + movieList.get(i).getBorrower().getNumber() + ")";
                 }
             }

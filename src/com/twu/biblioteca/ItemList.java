@@ -27,14 +27,14 @@ public class ItemList implements MenuOption {
         itemList.add(item);
     }
 
-    public void printList() {
+    public void printList(User loggedInUser) {
         for (int i = 0; i < itemList.size(); i++) {
             String output = (i + 1) + ". ";
             output += itemList.get(i).getTitle();
             output += "(" + itemList.get(i).getYear() + "): ";
             output += itemList.get(i).isAvailable() ? "Available" : "Not Available";
-            if (bib.getLoggedInUser() != null) {
-                if (bib.getLoggedInUser().getRole().equals("librarian") && !itemList.get(i).isAvailable()) {
+            if (loggedInUser != null) {
+                if (loggedInUser.getRole().equals("librarian") && !itemList.get(i).isAvailable()) {
                     output += " (Borrowed by: " + itemList.get(i).getBorrower().getName() + " - " + itemList.get(i).getBorrower().getNumber() + ") ";
                 }
             }
@@ -153,7 +153,7 @@ public class ItemList implements MenuOption {
 
         while (running) {
             printDescription();
-            printList();
+            printList(bib.getLoggedInUser());
 
             System.out.println(" ");
             System.out.println("What would you like to do? ");

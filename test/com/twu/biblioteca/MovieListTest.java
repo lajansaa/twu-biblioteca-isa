@@ -13,7 +13,7 @@ public class MovieListTest {
     private Biblioteca bib = new Biblioteca();
     private MovieList mockMovieList = new MovieList(bib);
     private Movie mockMovie = new Movie("Mock Title", "2018", "Mock Director", "5");
-    User mockUser = new User();
+    private User mockUser = new User();
 
     @Before
     public void setUpStreams() {
@@ -36,18 +36,8 @@ public class MovieListTest {
     }
 
     @Test
-    public void isLibrarian() {
-        assertEquals(true, mockMovieList.isLibrarian(0));
-    }
-
-    @Test
-    public void isItemUnavailable() {
-        assertEquals(true, mockMovieList.isItemUnavailable(0));
-    }
-
-    @Test
     public void printList() {
-        mockMovieList.printList();
+        mockMovieList.printList(mockUser);
         assertEquals("1. Mock Title (2018), Mock Director, 5/10: Not Available (Borrowed by: Mock Name - 9876543)\n", outContent.toString());
     }
 }
