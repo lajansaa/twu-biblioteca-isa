@@ -8,21 +8,10 @@ public class Biblioteca {
     private User loggedInUser = null;
     private UserDB userDB = new UserDB();
     private Login login = new Login(this, userDB);
-    private boolean running = true;
 
     public Biblioteca () {
-        initialiseBookList();
         initialiseMovieList();
         initialiseMenu();
-    }
-
-    public void initialiseBookList() {
-        ArrayList<String> titleList = new ArrayList<String>(Arrays.asList("Murder on Orient Expressway", "The ABC Murders", "Crooked House"));
-        ArrayList<String> yearList = new ArrayList<String>(Arrays.asList("1934", "1936", "1949"));
-        for (int i = 0; i < titleList.size(); i++) {
-            Book book = new Book(titleList.get(i), yearList.get(i));
-            bookList.addItem(book);
-        }
     }
 
    public void initialiseMovieList() {
@@ -35,8 +24,6 @@ public class Biblioteca {
             movieList.addItem(movie);
         }
     }
-
-
 
     public void initialiseMenu() {
         menu.addMenuOption(bookList);

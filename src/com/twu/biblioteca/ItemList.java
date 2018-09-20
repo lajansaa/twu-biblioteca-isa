@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 
 public class ItemList implements MenuOption {
-    private ArrayList<Item> itemList = new ArrayList<Item>();
+    private ArrayList<Item> itemList = new ArrayList<>();
     private String itemListName;
     private Scanner scanner = new Scanner(System.in);
     private Biblioteca bib;
