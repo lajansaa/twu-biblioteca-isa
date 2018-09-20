@@ -31,7 +31,7 @@ public class MovieListTest {
 
     @Test
     public void printList() {
-        mockMovieList.printList(mockUser);
+        mockMovieList.printList();
 //        assertEquals("1. Mock Title (2018), Mock Director, 5 / 10: Not Available (Borrowed by: Mock Name - 9876543)\n", outContent.toString());
     }
 }

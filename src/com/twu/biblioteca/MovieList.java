@@ -35,10 +35,9 @@ public class MovieList extends ItemList {
             output += movie.getRating() + ": ";
             output += movie.isAvailable() ? "Available" : "Not Available";
 
-            boolean isLibrarian = loggedInUser.getLoggedInUser().getRole().equals("librarian");
-            boolean isItemUnavailable = !movieList.get(i).isAvailable();
-
             if (loggedInUser.getLoggedInUser() != null) {
+                boolean isLibrarian = loggedInUser.getLoggedInUser().getRole().equals("librarian");
+                boolean isItemUnavailable = !movieList.get(i).isAvailable();
                 if (isLibrarian && isItemUnavailable) {
                     output += " (Borrowed by: " + movieList.get(i).getBorrower().getName() + " - " + movieList.get(i).getBorrower().getNumber() + ")";
                 }
