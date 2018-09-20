@@ -30,7 +30,7 @@ public class Biblioteca {
         ArrayList<String> titleList = new ArrayList<String>(Arrays.asList("Zootopia", "Big Hero 6", "The Incredibles"));
         ArrayList<String> yearList = new ArrayList<String>(Arrays.asList("2016", "2014", "2004"));
        ArrayList<String> directorList = new ArrayList<String>(Arrays.asList("Byron Howard", "Don Hall", "Brad Bird"));
-       ArrayList<String> ratingList = new ArrayList<String>(Arrays.asList("8", "7", "8"));
+       ArrayList<MovieRating> ratingList = new ArrayList<>(Arrays.asList(MovieRating.EIGHT, MovieRating.UNRATED, MovieRating.NINE));
         for (int i = 0; i < titleList.size(); i++) {
             Movie movie = new Movie(titleList.get(i), yearList.get(i),directorList.get(i), ratingList.get(i));
             movieList.addItem(movie);

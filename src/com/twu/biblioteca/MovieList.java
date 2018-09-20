@@ -19,7 +19,7 @@ public class MovieList extends ItemList {
             output += movie.getTitle();
             output += " (" + movie.getYear() + "), ";
             output += movie.getDirector() + ", ";
-            output += movie.getRating() + "/10: ";
+            output += movie.getRating() + ": ";
             output += movie.isAvailable() ? "Available" : "Not Available";
 
             boolean isLibrarian = loggedInUser.getRole().equals("librarian");

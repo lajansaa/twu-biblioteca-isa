@@ -12,7 +12,7 @@ public class MovieListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private Biblioteca bib = new Biblioteca();
     private MovieList mockMovieList = new MovieList(bib);
-    private Movie mockMovie = new Movie("Mock Title", "2018", "Mock Director", "5");
+    private Movie mockMovie = new Movie("Mock Title", "2018", "Mock Director", MovieRating.FIVE);
     private User mockUser = new User();
 
     @Before
@@ -38,6 +38,6 @@ public class MovieListTest {
     @Test
     public void printList() {
         mockMovieList.printList(mockUser);
-        assertEquals("1. Mock Title (2018), Mock Director, 5/10: Not Available (Borrowed by: Mock Name - 9876543)\n", outContent.toString());
+        assertEquals("1. Mock Title (2018), Mock Director, 5 / 10: Not Available (Borrowed by: Mock Name - 9876543)\n", outContent.toString());
     }
 }

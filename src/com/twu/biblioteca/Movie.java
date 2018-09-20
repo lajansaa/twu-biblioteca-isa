@@ -2,17 +2,12 @@ package com.twu.biblioteca;
 
 public class Movie extends Item {
     private String director;
-    private String rating = "unrated";
+    private MovieRating rating;
 
-    public Movie(String title, String year, String director, String rating) {
+    public Movie(String title, String year, String director, MovieRating rating) {
         super(title, year);
         this.director = director;
         this.rating = rating;
-    }
-
-    public Movie(String title, String year, String director) {
-        super(title, year);
-        this.director = director;
     }
 
     public String getDirector() {
@@ -20,7 +15,7 @@ public class Movie extends Item {
     }
 
     public String getRating() {
-        return rating;
+        return rating.toS();
     }
 
 }
