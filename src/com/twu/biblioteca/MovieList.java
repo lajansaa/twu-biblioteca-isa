@@ -5,12 +5,12 @@ import java.util.Arrays;
 
 public class MovieList extends ItemList {
     private ArrayList<Item> movieList;
-    private Biblioteca bib;
+    private LoggedInUser loggedInUser;
 
-    public MovieList(Biblioteca bib) {
-        super("Movie", bib);
+    public MovieList(LoggedInUser loggedInUser) {
+        super("Movie", loggedInUser);
         this.movieList = this.getItemList();
-        this.bib = bib;
+        this.loggedInUser = loggedInUser;
         initialiseMovieList();
     }
 
@@ -25,7 +25,7 @@ public class MovieList extends ItemList {
         }
     }
 
-    public void printList(User loggedInUser) {
+    public void printList() {
         for (int i = 0; i < movieList.size(); i++) {
             String output = (i + 1) + ". ";
             Movie movie = (Movie) movieList.get(i);
@@ -35,10 +35,10 @@ public class MovieList extends ItemList {
             output += movie.getRating() + ": ";
             output += movie.isAvailable() ? "Available" : "Not Available";
 
-            boolean isLibrarian = loggedInUser.getRole().equals("librarian");
+            boolean isLibrarian = loggedInUser.getLoggedInUser().getRole().equals("librarian");
             boolean isItemUnavailable = !movieList.get(i).isAvailable();
 
-            if (loggedInUser != null) {
+            if (loggedInUser.getLoggedInUser() != null) {
                 if (isLibrarian && isItemUnavailable) {
                     output += " (Borrowed by: " + movieList.get(i).getBorrower().getName() + " - " + movieList.get(i).getBorrower().getNumber() + ")";
                 }

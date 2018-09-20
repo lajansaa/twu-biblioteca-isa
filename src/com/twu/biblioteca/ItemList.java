@@ -8,11 +8,11 @@ public class ItemList implements MenuOption {
     private ArrayList<Item> itemList = new ArrayList<>();
     private String itemListName;
     private Scanner scanner = new Scanner(System.in);
-    private Biblioteca bib;
+    private LoggedInUser loggedInUser;
 
-    public ItemList(String itemListName, Biblioteca bib) {
+    public ItemList(String itemListName, LoggedInUser loggedInUser) {
         this.itemListName = itemListName;
-        this.bib = bib;
+        this.loggedInUser = loggedInUser;
     }
 
     public String getMenuOptionTitle() {
@@ -69,7 +69,7 @@ public class ItemList implements MenuOption {
     }
 
     public boolean isLoggedIn() {
-        return bib.getLoggedInUser() == null;
+        return loggedInUser.getLoggedInUser() == null;
     }
 
     public boolean isItemValid(String input) {
@@ -109,7 +109,7 @@ public class ItemList implements MenuOption {
     public void borrowItem(int itemIndex) {
         Item item = itemList.get(itemIndex);
         if (item.isAvailable()) {
-            item.setBorrower(bib.getLoggedInUser());
+            item.setBorrower(loggedInUser.getLoggedInUser());
             item.setAvailability(false);
             System.out.println("Thank you! Enjoy the " + itemListName.toLowerCase() + "!");
         } else {
@@ -120,7 +120,7 @@ public class ItemList implements MenuOption {
     public void returnItem(int itemIndex) {
         Item item = itemList.get(itemIndex);
         if (!item.isAvailable()) {
-            if (bib.getLoggedInUser() == item.getBorrower()) {
+            if (loggedInUser.getLoggedInUser() == item.getBorrower()) {
                 item.setBorrower(null);
                 item.setAvailability(true);
                 System.out.println("Thank you for returning the " + itemListName.toLowerCase() + ".");
@@ -153,7 +153,7 @@ public class ItemList implements MenuOption {
 
         while (running) {
             printDescription();
-            printList(bib.getLoggedInUser());
+            printList(loggedInUser.getLoggedInUser());
 
             System.out.println(" ");
             System.out.println("What would you like to do? ");

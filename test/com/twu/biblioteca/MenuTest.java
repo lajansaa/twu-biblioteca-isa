@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import sun.rmi.runtime.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -14,24 +15,10 @@ import java.util.Collection;
 
 import static org.junit.Assert.*;
 
-class CreateMockMenuOption implements MenuOption {
-    public String getMenuOptionTitle() {
-        return "Mock Option";
-    }
-    public void printDescription() {}
-    public String start() {
-        return "back";
-    }
-    public boolean checkUserInput(String userInput) {
-        return true;
-    }
-}
-
 @RunWith(Parameterized.class)
 public class MenuTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private Menu mockMenu = new Menu();
-    private CreateMockMenuOption mockMenuOption = new CreateMockMenuOption();
+    private Menu mockMenu = new Menu(new LoggedInUser());
 
     enum Type {CheckWithinRangeTest, CheckUserInputTest, DummyTest};
     @Parameterized.Parameters
@@ -61,16 +48,10 @@ public class MenuTest {
         System.setOut(new PrintStream(outContent));
     }
 
-    @Before
-    public void addMockMenuOption() {
-        mockMenu.addMenuOption(mockMenuOption);
-    }
-
     @Test
     public void getList() {
         Assume.assumeTrue(type == Type.DummyTest);
-        ArrayList<MenuOption> mockList = new ArrayList<MenuOption>();
-        mockList.add(mockMenuOption);
+        ArrayList<MenuOption> mockList = new ArrayList<>();
         assertEquals(mockList, mockMenu.getList());
     }
 

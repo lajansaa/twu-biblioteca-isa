@@ -6,8 +6,8 @@ import java.util.Arrays;
 public class BookList extends ItemList {
     private ArrayList<Item> bookList;
 
-    public BookList(Biblioteca bib) {
-        super("Book", bib);
+    public BookList(LoggedInUser loggedInUser) {
+        super("Book", loggedInUser);
         this.bookList = getItemList();
         initialiseBookList();
     }

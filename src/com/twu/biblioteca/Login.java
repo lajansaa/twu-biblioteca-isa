@@ -3,13 +3,15 @@ package com.twu.biblioteca;
 import java.util.Scanner;
 
 public class Login implements MenuOption {
-    private Biblioteca bib;
-    UserDB userDB;
+    private Menu menu;
+    private UserDB userDB;
     private Scanner scanner = new Scanner(System.in);
+    private LoggedInUser loggedInUser;
 
-    public Login(Biblioteca bib, UserDB userDB) {
-        this.bib = bib;
+    public Login(UserDB userDB, Menu menu, LoggedInUser loggedInUser) {
         this.userDB = userDB;
+        this.menu = menu;
+        this.loggedInUser = loggedInUser;
     }
 
     public String getMenuOptionTitle() {
@@ -40,20 +42,20 @@ public class Login implements MenuOption {
 
     public void createProfileMenuOption(User user) {
         Profile profile = new Profile(user);
-        bib.getMenu().addMenuOption(profile);
+        menu.addMenuOption(profile);
     }
 
-    public void createLogoutMenuOption(User user) {
-        Logout logout = new Logout(bib, userDB);
-        bib.getMenu().addMenuOption(logout);
+    public void createLogoutMenuOption() {
+        Logout logout = new Logout(userDB, menu, loggedInUser);
+        menu.addMenuOption(logout);
     }
 
     public boolean checkCredentials(String userLibraryNumber, String userPassword) {
         for (User user : userDB.getUserList()) {
             if (isValidCredentials(user, userLibraryNumber, userPassword)) {
                 createProfileMenuOption(user);
-                createLogoutMenuOption(user);
-                bib.setLoggedInUser(user);
+                createLogoutMenuOption();
+                loggedInUser.setLoggedInUser(user);
                 return false;
             }
         }

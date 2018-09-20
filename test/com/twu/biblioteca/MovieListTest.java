@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import org.junit.Before;
 import org.junit.Test;
+import sun.rmi.runtime.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -11,7 +12,8 @@ import static org.junit.Assert.*;
 public class MovieListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private Biblioteca bib = new Biblioteca();
-    private MovieList mockMovieList = new MovieList(bib);
+    private LoggedInUser loggedInUser = new LoggedInUser();
+    private MovieList mockMovieList = new MovieList(loggedInUser);
     private User mockUser = new User();
 
     @Before
@@ -24,7 +26,7 @@ public class MovieListTest {
         mockUser.setName("Mock Name");
         mockUser.setRole("librarian");
         mockUser.setNumber("9876543");
-        bib.setLoggedInUser(mockUser);
+        loggedInUser.setLoggedInUser(mockUser);
     }
 
     @Test

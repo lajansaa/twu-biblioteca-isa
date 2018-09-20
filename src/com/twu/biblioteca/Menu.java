@@ -4,8 +4,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-    private ArrayList<MenuOption> list = new ArrayList<MenuOption>();
+    private ArrayList<MenuOption> list = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
+    private LoggedInUser loggedInUser;
+
+    public Menu (LoggedInUser loggedInUser) {
+        this.loggedInUser = loggedInUser;
+        initialiseMenu();
+    }
+
+    public void initialiseMenu() {
+        BookList bookList = new BookList(loggedInUser);
+        MovieList movieList = new MovieList(loggedInUser);
+        UserDB userDB = new UserDB();
+        Login login = new Login(userDB, this, loggedInUser);
+
+        addMenuOption(bookList);
+        addMenuOption(movieList);
+        addMenuOption(login);
+    }
 
     public void addMenuOption(MenuOption option) {
         list.add(option);
@@ -41,7 +58,7 @@ public class Menu {
     }
 
     public void removeMenuOption(String menuOptionName) {
-        ArrayList<MenuOption> toRemove = new ArrayList<MenuOption>();
+        ArrayList<MenuOption> toRemove = new ArrayList<>();
         for (MenuOption menuOption : list) {
             if (menuOption.getMenuOptionTitle().equals(menuOptionName)) {
                 toRemove.add(menuOption);

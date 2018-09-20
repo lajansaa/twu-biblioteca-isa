@@ -38,9 +38,7 @@ public class Profile implements MenuOption {
     }
 
     public String start() {
-
         boolean running = true;
-
         String userInput = null;
 
         printDescription();

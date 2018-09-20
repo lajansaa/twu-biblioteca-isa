@@ -18,8 +18,7 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class BookListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private Biblioteca bib = new Biblioteca();
-    private BookList mockBookList = new BookList(bib);
+    private BookList mockBookList = new BookList(new LoggedInUser());
     private Book mockBook = new Book("Mock Book", "2018");
 
     enum Type {IsBorrowTest, IsBookValidTest, CheckUserInputTest, DummyTest};
