@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 public class Login implements MenuOption {
     private Biblioteca bib;
+    UserDB userDB;
     private Scanner scanner = new Scanner(System.in);
 
-    public Login(Biblioteca bib) {
+    public Login(Biblioteca bib, UserDB userDB) {
         this.bib = bib;
+        this.userDB = userDB;
     }
 
     public String getMenuOptionTitle() {
@@ -42,12 +44,12 @@ public class Login implements MenuOption {
     }
 
     public void createLogoutMenuOption(User user) {
-        Logout logout = new Logout(bib);
+        Logout logout = new Logout(bib, userDB);
         bib.getMenu().addMenuOption(logout);
     }
 
     public boolean checkCredentials(String userLibraryNumber, String userPassword) {
-        for (User user : bib.getUserList()) {
+        for (User user : userDB.getUserList()) {
             if (isValidCredentials(user, userLibraryNumber, userPassword)) {
                 createProfileMenuOption(user);
                 createLogoutMenuOption(user);

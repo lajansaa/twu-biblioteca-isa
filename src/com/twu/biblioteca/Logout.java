@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 public class Logout implements MenuOption {
     private Biblioteca bib;
+    private UserDB userDB;
     private Scanner scanner = new Scanner(System.in);
 
-    public Logout(Biblioteca bib) {
+    public Logout(Biblioteca bib, UserDB userDB) {
         this.bib = bib;
+        this.userDB = userDB;
     }
 
     public String getMenuOptionTitle() {
@@ -21,7 +23,7 @@ public class Logout implements MenuOption {
     }
 
     public void createLoginMenuOption() {
-        Login login = new Login(bib);
+        Login login = new Login(bib, userDB);
         bib.getMenu().addMenuOption(login);
     }
 
