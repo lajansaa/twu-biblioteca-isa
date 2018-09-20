@@ -1,7 +1,10 @@
 package com.twu.biblioteca;
 
+import java.util.Scanner;
+
 public class Profile implements MenuOption {
     private User user;
+    private Scanner scanner = new Scanner(System.in);
 
     public Profile(User user) {
         this.user = user;
@@ -45,8 +48,8 @@ public class Profile implements MenuOption {
         while (running) {
             printProfile();
 
-            Helper helper = new Helper();
-            userInput = helper.getUserInput("What would you like to do? (back/quit)").toLowerCase();
+            System.out.println("What would you like to do? (back/quit) ");
+            userInput = scanner.nextLine().toLowerCase();
 
             running = checkUserInput(userInput);
         }

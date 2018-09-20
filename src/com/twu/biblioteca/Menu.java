@@ -1,9 +1,11 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Menu {
     private ArrayList<MenuOption> list = new ArrayList<MenuOption>();
+    private Scanner scanner = new Scanner(System.in);
 
     public void addMenuOption(MenuOption option) {
         list.add(option);
@@ -81,8 +83,9 @@ public class Menu {
             printDescription();
             printMenu();
 
-            Helper helper = new Helper();
-            String userInput = helper.getUserInput("What would you like to do? ").toLowerCase();
+            System.out.println(" ");
+            System.out.println("What would you like to do? ");
+            String userInput = scanner.nextLine().toLowerCase();
 
             running = checkUserInput(userInput);
         }

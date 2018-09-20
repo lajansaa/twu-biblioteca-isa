@@ -1,11 +1,13 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class ItemList implements MenuOption {
     private ArrayList<Item> itemList = new ArrayList<Item>();
     private String itemListName;
+    private Scanner scanner = new Scanner(System.in);
     private Biblioteca bib;
 
     public ItemList(String itemListName, Biblioteca bib) {
@@ -153,8 +155,9 @@ public class ItemList implements MenuOption {
             printDescription();
             printList();
 
-            Helper helper = new Helper();
-            userInput = helper.getUserInput("What would you like to do? ").toLowerCase();
+            System.out.println(" ");
+            System.out.println("What would you like to do? ");
+            userInput = scanner.nextLine().toLowerCase();
 
             running = checkUserInput(userInput);
         }

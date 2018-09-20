@@ -30,9 +30,9 @@ public class BookListTest {
                 {Type.IsBorrowTest, "borrow1", false},
                 {Type.IsBookValidTest, "borrow 1", true},
                 {Type.IsBookValidTest, "borrow 2", false},
-                {Type.CheckUserInputTest, "q", false},
-                {Type.CheckUserInputTest, "b", false},
-                {Type.CheckUserInputTest, "borrow 1", true},
+                {Type.CheckUserInputTest, "quit", false},
+                {Type.CheckUserInputTest, "back", false},
+                {Type.CheckUserInputTest, "0", true},
                 {Type.CheckUserInputTest, "invalid", true}
         });
     }

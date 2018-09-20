@@ -1,7 +1,10 @@
 package com.twu.biblioteca;
 
+import java.util.Scanner;
+
 public class Login implements MenuOption {
     private Biblioteca bib;
+    private Scanner scanner = new Scanner(System.in);
 
     public Login(Biblioteca bib) {
         this.bib = bib;
@@ -58,10 +61,11 @@ public class Login implements MenuOption {
     }
 
     public boolean getCredentials() {
-        Helper helper = new Helper();
         System.out.println("Please enter the following:");
-        String userLibraryNumber = helper.getUserInput("Library Number (xxx-xxxx): ");
-        String userPassword = helper.getUserInput("Password: ");
+        System.out.println(("Library Number (xxx-xxxx): "));
+        String userLibraryNumber = scanner.nextLine();
+        System.out.println(("Password: "));
+        String userPassword = scanner.nextLine();
         return checkCredentials(userLibraryNumber, userPassword);
     }
 
@@ -72,8 +76,9 @@ public class Login implements MenuOption {
         while (running) {
             printDescription();
 
-            Helper helper = new Helper();
-            userInput = helper.getUserInput("What would you like to do? (login/back/quit)").toLowerCase();
+            System.out.println(" ");
+            System.out.println("What would you like to do? (login/back/quit) ");
+            userInput = scanner.nextLine().toLowerCase();
 
             running = checkUserInput(userInput);
 

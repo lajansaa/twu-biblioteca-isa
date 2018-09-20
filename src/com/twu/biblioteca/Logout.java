@@ -1,7 +1,10 @@
 package com.twu.biblioteca;
 
+import java.util.Scanner;
+
 public class Logout implements MenuOption {
     private Biblioteca bib;
+    private Scanner scanner = new Scanner(System.in);
 
     public Logout(Biblioteca bib) {
         this.bib = bib;
@@ -47,8 +50,9 @@ public class Logout implements MenuOption {
         while (running) {
             printDescription();
 
-            Helper helper = new Helper();
-            userInput = helper.getUserInput("What would you like to do? (logout/back/quit)").toLowerCase();
+            System.out.println(" ");
+            System.out.println("What would you like to do? (logout/back/quit) ");
+            userInput = scanner.nextLine().toLowerCase();
 
             running = checkUserInput(userInput);
 

@@ -41,8 +41,8 @@ public class MenuTest {
                 {Type.CheckWithinRangeTest, "1", true},
                 {Type.CheckWithinRangeTest, "2", false},
                 {Type.CheckWithinRangeTest, "invalid", false},
-                {Type.CheckUserInputTest, "q", false},
-                {Type.CheckUserInputTest, "b", true},
+                {Type.CheckUserInputTest, "quit", false},
+                {Type.CheckUserInputTest, "back", true},
                 {Type.CheckUserInputTest, "invalid", true}
         });
     }
