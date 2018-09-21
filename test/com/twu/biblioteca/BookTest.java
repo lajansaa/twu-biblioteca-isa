@@ -17,10 +17,4 @@ public class BookTest {
     public void getYear() {
         assertEquals("1967", book.getYear());
     }
-
-    @Test
-    public void isAvailable() {
-        book.setAvailability(false);
-        assertEquals(false, book.isAvailable());
-    }
 }

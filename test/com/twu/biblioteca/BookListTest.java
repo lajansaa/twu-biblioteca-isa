@@ -1,6 +1,5 @@
 package com.twu.biblioteca;
 
-import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +8,6 @@ import org.junit.runners.Parameterized;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -18,8 +16,8 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class BookListTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private BookList mockBookList = new BookList(new LoggedInUser());
-    private Book mockBook = new Book("Mock Book", "2018");
+    private LoggedInUser loggedInUser = new LoggedInUser();
+    private BookList mockBookList = new BookList(loggedInUser);
 
     enum Type {IsBorrowTest, IsBookValidTest, CheckUserInputTest, DummyTest};
     @Parameterized.Parameters
@@ -59,43 +57,9 @@ public class BookListTest {
     }
 
     @Test
-    public void isBorrow() {
+    public void isBorrowOrReturn() {
         Assume.assumeTrue(type == Type.IsBorrowTest);
-        assertEquals(expected, mockBookList.isBorrow(input));
-    }
-
-    @Test
-    public void getBookIndex() {
-        Assume.assumeTrue(type == Type.DummyTest);
-        assertEquals(0, mockBookList.getItemIndex("borrow 1"));
-    }
-
-    @Test
-    public void isBookValid() {
-        Assume.assumeTrue(type == Type.IsBookValidTest);
-        assertEquals(expected, mockBookList.isItemValid(input));
-    }
-
-    @Test
-    public void borrowBook() {
-        Assume.assumeTrue(type == Type.DummyTest);
-        mockBook.setAvailability(true);
-        mockBookList.borrowItem(0);
-        assertEquals("Thank you! Enjoy the book!\n", outContent.toString());
-    }
-
-    @Test
-    public void isReturn() {
-        Assume.assumeTrue(type == Type.DummyTest);
-        assertEquals(true, mockBookList.isReturn("return 1"));
-    }
-
-    @Test
-    public void returnBook() {
-        Assume.assumeTrue(type == Type.DummyTest);
-        mockBook.setAvailability(false);
-        mockBookList.returnItem(0);
-//        assertEquals("Thank you for returning the book.\n", outContent.toString());
+        assertEquals(expected, mockBookList.isBorrowOrReturn(input));
     }
 
     @Test

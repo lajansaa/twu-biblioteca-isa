@@ -6,10 +6,12 @@ import java.util.Arrays;
 public class MovieList extends ItemList {
     private ArrayList<Item> movieList;
     private LoggedInUser loggedInUser;
+    private BorrowReturnList borrowReturnList = new BorrowReturnList();
 
     public MovieList(LoggedInUser loggedInUser) {
         super("Movie", loggedInUser);
         this.movieList = this.getItemList();
+        this.borrowReturnList = this.getBorrowReturnList();
         this.loggedInUser = loggedInUser;
         initialiseMovieList();
     }
@@ -33,13 +35,13 @@ public class MovieList extends ItemList {
             output += " (" + movie.getYear() + "), ";
             output += movie.getDirector() + ", ";
             output += movie.getRating() + ": ";
-            output += movie.isAvailable() ? "Available" : "Not Available";
+            output += borrowReturnList.isItemAvailable(movie) ? "Available" : "Not Available";
 
             if (loggedInUser.getLoggedInUser() != null) {
                 boolean isLibrarian = loggedInUser.getLoggedInUser().getRole().equals("librarian");
-                boolean isItemUnavailable = !movieList.get(i).isAvailable();
+                boolean isItemUnavailable = !borrowReturnList.isItemAvailable(movie);
                 if (isLibrarian && isItemUnavailable) {
-                    output += " (Borrowed by: " + movieList.get(i).getBorrower().getName() + " - " + movieList.get(i).getBorrower().getNumber() + ")";
+                    output += " (Borrowed by: " + borrowReturnList.getBorrower(movie).getName() + " - " + borrowReturnList.getBorrower(movie).getNumber() + ")";
                 }
             }
             System.out.println(output);

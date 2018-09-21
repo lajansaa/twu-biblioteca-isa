@@ -19,19 +19,4 @@ public class Item {
         return year;
     }
 
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
-    }
-
-    public boolean isAvailable() {
-        return availability;
-    }
-
-    public void setBorrower(User borrower) {
-        this.borrower = borrower;
-    }
-
-    public User getBorrower() {
-        return borrower;
-    }
 }
