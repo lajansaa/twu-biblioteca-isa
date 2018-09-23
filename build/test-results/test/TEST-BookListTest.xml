@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BookListTest" tests="27" skipped="20" failures="0" errors="0" timestamp="2018-09-23T08:24:06" hostname="ISAs-MacBook-Pro.local" time="0.028">
+  <properties/>
+  <testcase name="checkUserInput[0]" classname="BookListTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="isBorrowOrReturn[0]" classname="BookListTest" time="0.002">
+    <skipped/>
+  </testcase>
+  <testcase name="printBookList[0]" classname="BookListTest" time="0.0"/>
+  <testcase name="checkUserInput[1]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="isBorrowOrReturn[1]" classname="BookListTest" time="0.001"/>
+  <testcase name="printBookList[1]" classname="BookListTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="checkUserInput[2]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="isBorrowOrReturn[2]" classname="BookListTest" time="0.001"/>
+  <testcase name="printBookList[2]" classname="BookListTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="checkUserInput[3]" classname="BookListTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="isBorrowOrReturn[3]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="printBookList[3]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="checkUserInput[4]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="isBorrowOrReturn[4]" classname="BookListTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="printBookList[4]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="checkUserInput[5]" classname="BookListTest" time="0.0"/>
+  <testcase name="isBorrowOrReturn[5]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="printBookList[5]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="checkUserInput[6]" classname="BookListTest" time="0.0"/>
+  <testcase name="isBorrowOrReturn[6]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="printBookList[6]" classname="BookListTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="checkUserInput[7]" classname="BookListTest" time="0.001"/>
+  <testcase name="isBorrowOrReturn[7]" classname="BookListTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="printBookList[7]" classname="BookListTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="checkUserInput[8]" classname="BookListTest" time="0.0"/>
+  <testcase name="isBorrowOrReturn[8]" classname="BookListTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="printBookList[8]" classname="BookListTest" time="0.001">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
