@@ -30,14 +30,4 @@ public class MenuTest {
         assertEquals(0, mockMenu.getList().size());
     }
 
-    @Test
-    public void start() {
-        ActionAsker actionAsker = mock(ActionAsker.class);
-        CheckUserInput checkUserInput = mock(CheckUserInput.class);
-        when(actionAsker.ask("What would you like to do? ")).thenReturn("back");
-        mockMenu.start(actionAsker, checkUserInput);
-        verify(checkUserInput).check("back", mockMenu);
-
-    }
-
 }

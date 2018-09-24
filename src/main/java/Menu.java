@@ -57,7 +57,7 @@ public class Menu {
         list.removeAll(toRemove);
     }
 
-    public void start(ActionAsker actionAsker, CheckUserInput checkUserInput) {
+    public void start(ActionAsker actionAsker, CheckUserInput checkUserInput, Display display) {
         boolean running = true;
 
         while (running) {
@@ -67,7 +67,7 @@ public class Menu {
             System.out.println(" ");
             String userInput = actionAsker.ask("What would you like to do? ");
 
-            running = checkUserInput.check(userInput, this);
+            running = checkUserInput.check(userInput, this, display);
         }
     }
 }
