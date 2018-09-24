@@ -1,20 +1,23 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Menu {
     private ArrayList<MenuOption> list = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
     private LoggedInUser loggedInUser;
 
     public Menu (LoggedInUser loggedInUser) {
         this.loggedInUser = loggedInUser;
-        initialiseMenu();
     }
 
-    public void initialiseMenu() {
+    public void initialise() {
         BookList bookList = new BookList(loggedInUser);
+        bookList.initialise();
+
         MovieList movieList = new MovieList(loggedInUser);
+        movieList.initialise();
+
         UserDB userDB = new UserDB();
+        userDB.initialise();
+
         Login login = new Login(userDB, this, loggedInUser);
 
         addMenuOption(bookList);
@@ -22,17 +25,13 @@ public class Menu {
         addMenuOption(login);
     }
 
-    public void addMenuOption(MenuOption option) {
-        list.add(option);
-    }
-
     public ArrayList<MenuOption> getList() {
         return list;
     }
 
-    public void printMenu() {
+    public void printMenu(Display display) {
         for (int i = 0; i < list.size(); i++) {
-            System.out.println((i + 1) + ". " + list.get(i).getMenuOptionTitle());
+            display.println((i + 1) + ". " + list.get(i).getMenuOptionTitle());
         }
     }
 
@@ -44,15 +43,8 @@ public class Menu {
         System.out.println(" ");
     }
 
-    public boolean checkWithinRange(String userInput) {
-        int userInputInt;
-        if (userInput.matches("[0-9]+")) {
-            userInputInt = Integer.parseInt(userInput);
-            if (userInputInt > 0 && userInputInt <= list.size()) {
-                return true;
-            }
-        }
-        return false;
+    public void addMenuOption(MenuOption option) {
+        list.add(option);
     }
 
     public void removeMenuOption(String menuOptionName) {
@@ -65,44 +57,17 @@ public class Menu {
         list.removeAll(toRemove);
     }
 
-    public boolean checkMenuOptionResult(String result) {
-        if (result.equals("quit")) {
-            return false;
-        } else if (result.equals("login")) {
-            removeMenuOption("Login");
-        } else if (result.equals("logout")) {
-            removeMenuOption("My Profile");
-            removeMenuOption("Logout");
-        }
-        return true;
-    }
-
-    public boolean checkUserInput(String userInput) {
-        if (userInput.equals("quit")) {
-            return false;
-        } else if (userInput.equals("back")) {
-            System.out.println("This is the home page. Please select a valid menu option!");
-        } else if (checkWithinRange(userInput)) {
-            String result = list.get(Integer.parseInt(userInput) - 1).start();
-            return checkMenuOptionResult(result);
-        } else {
-            System.out.println("Please select a valid option!");
-        }
-        return true;
-    }
-
-    public void start() {
+    public void start(ActionAsker actionAsker, CheckUserInput checkUserInput) {
         boolean running = true;
 
         while (running) {
             printDescription();
-            printMenu();
+            printMenu(new Display());
 
             System.out.println(" ");
-            System.out.println("What would you like to do? ");
-            String userInput = scanner.nextLine().toLowerCase();
+            String userInput = actionAsker.ask("What would you like to do? ");
 
-            running = checkUserInput(userInput);
+            running = checkUserInput.check(userInput, this);
         }
     }
 }

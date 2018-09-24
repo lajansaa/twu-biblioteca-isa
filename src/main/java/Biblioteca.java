@@ -10,9 +10,10 @@ public class Biblioteca {
         System.out.println("At any point in time of your session with us, feel free to type back to go to a previous page or type quit to leave.");
     }
 
-    public void startBiblioteca() {
+    public void start() {
         printWelcomeMessage();
-        menu.start();
+        menu.initialise();
+        menu.start(new ActionAsker(), new CheckUserInput());
         System.out.println("See you again soon!");
     }
 }

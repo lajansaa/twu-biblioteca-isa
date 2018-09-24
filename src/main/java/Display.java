@@ -1,3 +1,7 @@
-public interface Display {
-    void print(String line);
+
+public class Display {
+
+    public void println(String message) {
+        System.out.println(message);
+    }
 }
