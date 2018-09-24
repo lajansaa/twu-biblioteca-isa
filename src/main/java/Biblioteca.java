@@ -13,7 +13,7 @@ public class Biblioteca {
     public void start() {
         printWelcomeMessage();
         menu.initialise();
-        menu.start(new ActionAsker(), new CheckUserInput());
+        menu.start(new ActionAsker(), new CheckUserInput(), new Display());
         System.out.println("See you again soon!");
     }
 }

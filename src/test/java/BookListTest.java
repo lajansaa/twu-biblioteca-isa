@@ -51,7 +51,7 @@ public class BookListTest {
     public void printBookList() {
         Assume.assumeTrue(type == Type.DummyTest);
         mockBookList.printList();
-//        assertEquals("1. Mock Book(2018): Available\n", outContent.toString());
+        assertEquals("1. Mock Book(2018): Available\n", outContent.toString());
     }
 
     @Test

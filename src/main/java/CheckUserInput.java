@@ -22,18 +22,18 @@ public class CheckUserInput {
         return true;
     }
 
-    public boolean check(String userInput, Menu menu) {
+    public boolean check(String userInput, Menu menu, Display display) {
+        Executor executor = new Executor();
         if (userInput.equals("quit")) {
-            return false;
+            return executor.execute(new QuitAction());
         } else if (userInput.equals("back")) {
-            System.out.println("This is the home page. Please select a valid menu option!");
+            return executor.execute(new BackAction());
         } else if (checkWithinRange(userInput, menu.getList())) {
             MenuOption selectedOption = menu.getList().get(Integer.parseInt(userInput) - 1);
             String result = selectedOption.start();
             return checkMenuOptionResult(result, menu);
         } else {
-            System.out.println("Please select a valid option!");
+            return executor.execute(new InvalidAction());
         }
-        return true;
     }
 }
