@@ -1,37 +1,42 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class Menu {
-    private ArrayList<MenuOption> list = new ArrayList<>();
+public class Menu implements Page {
+    private ArrayList<Page> menuList = new ArrayList<>();
     private LoggedInUser loggedInUser;
 
-    public Menu (LoggedInUser loggedInUser) {
+    public Menu(LoggedInUser loggedInUser) {
         this.loggedInUser = loggedInUser;
+        initialise();
     }
 
-    public void initialise() {
+    private void initialise() {
         BookList bookList = new BookList(loggedInUser);
-        bookList.initialise();
-
         MovieList movieList = new MovieList(loggedInUser);
-        movieList.initialise();
-
-        UserDB userDB = new UserDB();
-        userDB.initialise();
-
-        Login login = new Login(userDB, this, loggedInUser);
 
         addMenuOption(bookList);
         addMenuOption(movieList);
-        addMenuOption(login);
+        addLoginOrLogout();
+
     }
 
-    public ArrayList<MenuOption> getList() {
-        return list;
+    private void addLoginOrLogout() {
+        UserDB userDB = new UserDB();
+
+        if (loggedInUser.getLoggedInUser() == null) {
+            Login login = new Login(userDB, loggedInUser);
+            addMenuOption(login);
+        } else {
+            Logout logout = new Logout(userDB, loggedInUser);
+            Profile profile = new Profile(loggedInUser.getLoggedInUser(), loggedInUser);
+            addMenuOption(profile);
+            addMenuOption(logout);
+        }
     }
 
-    public void printMenu(Display display) {
-        for (int i = 0; i < list.size(); i++) {
-            display.println((i + 1) + ". " + list.get(i).getMenuOptionTitle());
+    private void printList() {
+        for (int i = 0; i < menuList.size(); i++) {
+            System.out.println((i + 1) + ". " + menuList.get(i).getTitle());
         }
     }
 
@@ -43,31 +48,49 @@ public class Menu {
         System.out.println(" ");
     }
 
-    public void addMenuOption(MenuOption option) {
-        list.add(option);
+    private boolean checkWithinRange(String userInput, ArrayList<Page> list) {
+        int userInputInt;
+        if (userInput.matches("[0-9]+")) {
+            userInputInt = Integer.parseInt(userInput);
+            return userInputInt > 0 && userInputInt <= list.size();
+        }
+        return false;
     }
 
-    public void removeMenuOption(String menuOptionName) {
-        ArrayList<MenuOption> toRemove = new ArrayList<>();
-        for (MenuOption menuOption : list) {
-            if (menuOption.getMenuOptionTitle().equals(menuOptionName)) {
-                toRemove.add(menuOption);
-            }
+    private Page checkUserInput(String userInput) {
+        if (userInput.equals("quit")) {
+            return null;
         }
-        list.removeAll(toRemove);
+
+        if (userInput.equals("back")) {
+            return this;
+        }
+
+        if (checkWithinRange(userInput, menuList)) {
+            return menuList.get(Integer.parseInt(userInput) - 1);
+        }
+
+        System.out.println("Please select a valid option!");
+        return this;
     }
 
-    public void start(ActionAsker actionAsker, CheckUserInput checkUserInput, Display display) {
-        boolean running = true;
+    public void addMenuOption(Page option) {
+        menuList.add(option);
+    }
 
-        while (running) {
-            printDescription();
-            printMenu(new Display());
+    public String getTitle() {
+        return "Menu";
+    }
 
-            System.out.println(" ");
-            String userInput = actionAsker.ask("What would you like to do? ");
+    public Page start() {
+        printDescription();
+        printList();
 
-            running = checkUserInput.check(userInput, this, display);
-        }
+        System.out.println(" ");
+        System.out.println("What do you want to do?");
+        Scanner scanner = new Scanner(System.in);
+
+        String userInput = scanner.nextLine();
+        return checkUserInput(userInput);
     }
 }

@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class MenuTest {
-    private Menu mockMenu = new Menu(new LoggedInUser());
+    private MenuOriginal mockMenu = new MenuOriginal(new LoggedInUser());
     private MenuOption mockMenuOption = mock(MenuOption.class);
 
     @Before

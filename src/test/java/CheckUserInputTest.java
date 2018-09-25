@@ -1,10 +1,6 @@
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -33,7 +29,7 @@ public class CheckUserInputTest {
     @Test
     public void checkQuit() {
         CheckUserInput checkUserInput = new CheckUserInput();
-        Menu mockMenu = mock(Menu.class);
+        MenuOriginal mockMenu = mock(MenuOriginal.class);
         Display display = mock(Display.class);
         assertEquals(false, checkUserInput.check("quit", mockMenu, display));
     }
@@ -41,7 +37,7 @@ public class CheckUserInputTest {
     @Test
     public void checkBack() {
         CheckUserInput checkUserInput = new CheckUserInput();
-        Menu mockMenu = mock(Menu.class);
+        MenuOriginal mockMenu = mock(MenuOriginal.class);
         Display display = mock(Display.class);
         checkUserInput.check("back", mockMenu, display);
         verify(display).println("This is the home page. Please select a valid menu option!");
@@ -50,7 +46,7 @@ public class CheckUserInputTest {
     @Test
     public void checkMenuOption() {
         CheckUserInput checkUserInput = new CheckUserInput();
-        Menu mockMenu = mock(Menu.class);
+        MenuOriginal mockMenu = mock(MenuOriginal.class);
         MenuOption mockMenuOption = mock(MenuOption.class);
 
         ArrayList<MenuOption> mockList = new ArrayList<>();

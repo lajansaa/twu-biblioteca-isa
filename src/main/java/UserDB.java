@@ -4,6 +4,10 @@ import java.util.Arrays;
 public class UserDB {
     private ArrayList<User> userList = new ArrayList<User>();
 
+    public UserDB() {
+        initialise();
+    }
+
     public void initialise() {
         ArrayList<String> nameList = new ArrayList<>(Arrays.asList("Isa", "Jason"));
         ArrayList<String> emailList = new ArrayList<>(Arrays.asList("isa@mail.com", "jason@mail.com"));

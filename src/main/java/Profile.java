@@ -1,14 +1,18 @@
+import sun.rmi.runtime.Log;
+
 import java.util.Scanner;
 
-public class Profile implements MenuOption {
+public class Profile implements Page {
     private User user;
+    private LoggedInUser loggedInUser;
     private Scanner scanner = new Scanner(System.in);
 
-    public Profile(User user) {
+    public Profile(User user, LoggedInUser loggedInUser) {
         this.user = user;
+        this.loggedInUser = loggedInUser;
     }
 
-    public String getMenuOptionTitle() {
+    public String getTitle() {
         return "My Profile";
     }
 
@@ -19,14 +23,18 @@ public class Profile implements MenuOption {
         System.out.println(" ");
     }
 
-    public boolean checkUserInput(String userInput) {
-        if (userInput.equals("quit") || userInput.equals("back")) {
-            return false;
-        } else {
-            System.out.println("That's an invalid option!");
-            System.out.println(" ");
-            return true;
+    public Page checkUserInput(String userInput) {
+        System.out.println(" ");
+        if (userInput.equals("quit")) {
+            return null;
         }
+
+        if (userInput.equals("back")) {
+            return new Menu(loggedInUser);
+        }
+
+        System.out.println("Please select a valid option!");
+        return this;
     }
 
     public void printProfile() {
@@ -35,22 +43,17 @@ public class Profile implements MenuOption {
         System.out.println("Number: " + user.getNumber());
     }
 
-    public String start() {
-        boolean running = true;
-        String userInput = null;
-
+    public Page start() {
         printDescription();
 
-        while (running) {
-            printProfile();
+        printProfile();
 
-            System.out.println("What would you like to do? (back/quit) ");
-            userInput = scanner.nextLine().toLowerCase();
+        System.out.println(" ");
+        System.out.println("What would you like to do? (back/quit) ");
 
-            running = checkUserInput(userInput);
-        }
+        String userInput = scanner.nextLine();
+        return checkUserInput(userInput);
 
-        return userInput;
     }
 
 }

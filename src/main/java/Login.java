@@ -1,18 +1,16 @@
 import java.util.Scanner;
 
-public class Login implements MenuOption {
-    private Menu menu;
+public class Login implements Page {
     private UserDB userDB;
     private Scanner scanner = new Scanner(System.in);
     private LoggedInUser loggedInUser;
 
-    public Login(UserDB userDB, Menu menu, LoggedInUser loggedInUser) {
+    public Login(UserDB userDB, LoggedInUser loggedInUser) {
         this.userDB = userDB;
-        this.menu = menu;
         this.loggedInUser = loggedInUser;
     }
 
-    public String getMenuOptionTitle() {
+    public String getTitle() {
         return "Login";
     }
 
@@ -22,47 +20,41 @@ public class Login implements MenuOption {
         System.out.println("-----");
     }
 
-    public boolean checkUserInput(String userInput) {
+    public Page checkUserInput(String userInput) {
         System.out.println(" ");
-        if (userInput.equals("quit") || userInput.equals("back")) {
-            return false;
-        } else if (userInput.equals("login")) {
-            return getCredentials();
-        } else {
-            System.out.println("That's an invalid option!");
-            return true;
+        if (userInput.equals("quit")) {
+            return null;
         }
+
+        if (userInput.equals("back")) {
+            return new Menu(loggedInUser);
+        }
+
+        if (userInput.equals("login")) {
+            return getCredentials();
+        }
+
+        System.out.println("Please select a valid option!");
+        return this;
     }
 
     public boolean isValidCredentials(User user, String userLibraryNumber, String userPassword) {
         return user.getLibraryNumber().equals(userLibraryNumber) && user.getPassword().equals(userPassword);
     }
 
-    public void createProfileMenuOption(User user) {
-        Profile profile = new Profile(user);
-        menu.addMenuOption(profile);
-    }
-
-    public void createLogoutMenuOption() {
-        Logout logout = new Logout(userDB, menu, loggedInUser);
-        menu.addMenuOption(logout);
-    }
-
-    public boolean checkCredentials(String userLibraryNumber, String userPassword) {
+    public Page checkCredentials(String userLibraryNumber, String userPassword) {
         for (User user : userDB.getUserList()) {
             if (isValidCredentials(user, userLibraryNumber, userPassword)) {
-                createProfileMenuOption(user);
-                createLogoutMenuOption();
                 loggedInUser.setLoggedInUser(user);
-                return false;
+                return new Menu(loggedInUser);
             }
         }
         System.out.println(" ");
         System.out.println("Invalid credentials!");
-        return true;
+        return this;
     }
 
-    public boolean getCredentials() {
+    public Page getCredentials() {
         System.out.println("Please enter the following:");
         System.out.println(("Library Number (xxx-xxxx): "));
         String userLibraryNumber = scanner.nextLine();
@@ -71,20 +63,14 @@ public class Login implements MenuOption {
         return checkCredentials(userLibraryNumber, userPassword);
     }
 
-    public String start() {
-        boolean running = true;
-        String userInput = null;
+    public Page start() {
+        printDescription();
 
-        while (running) {
-            printDescription();
+        System.out.println(" ");
+        System.out.println("What would you like to do? (login/back/quit) ");
 
-            System.out.println(" ");
-            System.out.println("What would you like to do? (login/back/quit) ");
-            userInput = scanner.nextLine().toLowerCase();
+        String userInput = scanner.nextLine();
+        return checkUserInput(userInput);
 
-            running = checkUserInput(userInput);
-
-        }
-        return userInput;
     }
 }

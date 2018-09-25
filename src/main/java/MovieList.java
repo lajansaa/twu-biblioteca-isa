@@ -4,13 +4,14 @@ import java.util.Arrays;
 public class MovieList extends ItemList {
     private ArrayList<Item> movieList;
     private LoggedInUser loggedInUser;
-    private BorrowReturnList borrowReturnList = new BorrowReturnList();
+    private BorrowReturnList borrowReturnList;
 
     public MovieList(LoggedInUser loggedInUser) {
         super("Movie", loggedInUser);
         this.movieList = this.getItemList();
         this.borrowReturnList = this.getBorrowReturnList();
         this.loggedInUser = loggedInUser;
+        initialise();
     }
 
     public void initialise() {

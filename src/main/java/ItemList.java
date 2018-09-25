@@ -1,13 +1,12 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 
-public class ItemList implements MenuOption {
+public class ItemList implements Page {
     private ArrayList<Item> itemList = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
     private BorrowReturnList borrowReturnList = new BorrowReturnList();
     private String itemListName;
-    private Scanner scanner = new Scanner(System.in);
     private LoggedInUser loggedInUser;
 
     public ItemList(String itemListName, LoggedInUser loggedInUser) {
@@ -15,7 +14,7 @@ public class ItemList implements MenuOption {
         this.loggedInUser = loggedInUser;
     }
 
-    public String getMenuOptionTitle() {
+    public String getTitle() {
         return "List " + itemListName;
     }
 
@@ -61,34 +60,34 @@ public class ItemList implements MenuOption {
         return input.matches("borrow \\d+|return \\d+");
     }
 
-    public boolean checkUserInput(String userInput) {
+    public Page checkUserInput(String userInput) {
         System.out.println(" ");
-        if (userInput.equals("quit") || userInput.equals("back")) {
-            return false;
-        } else if (isBorrowOrReturn(userInput)) {
-            borrowReturnList.start(userInput, itemListName, itemList, loggedInUser.getLoggedInUser());
-        } else {
-            System.out.println("Select a valid option!");
+        if (userInput.equals("quit")) {
+            return null;
         }
-        System.out.println(" ");
-        return true;
+
+        if (userInput.equals("back")) {
+            return new Menu(loggedInUser);
+        }
+
+        if (isBorrowOrReturn(userInput)) {
+            borrowReturnList.start(userInput, itemListName, itemList, loggedInUser.getLoggedInUser());
+            return this;
+        }
+
+        System.out.println("Please select a valid option!");
+        return this;
     }
 
-    public String start() {
-        boolean running = true;
-        String userInput = null;
+    public Page start() {
+        printDescription();
+        printList();
 
-        while (running) {
-            printDescription();
-            printList();
+        System.out.println(" ");
+        System.out.println("What would you like to do? ");
 
-            System.out.println(" ");
-            System.out.println("What would you like to do? ");
-            userInput = scanner.nextLine().toLowerCase();
+        String userInput = scanner.nextLine();
+        return checkUserInput(userInput);
 
-            running = checkUserInput(userInput);
-        }
-
-        return userInput;
     }
 }

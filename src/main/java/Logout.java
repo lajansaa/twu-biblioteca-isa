@@ -1,18 +1,16 @@
 import java.util.Scanner;
 
-public class Logout implements MenuOption {
-    private Menu menu;
+public class Logout implements Page {
     private UserDB userDB;
     private LoggedInUser loggedInUser;
     private Scanner scanner = new Scanner(System.in);
 
-    public Logout(UserDB userDB, Menu menu, LoggedInUser loggedInUser) {
-        this.menu = menu;
+    public Logout(UserDB userDB, LoggedInUser loggedInUser) {
         this.userDB = userDB;
         this.loggedInUser = loggedInUser;
     }
 
-    public String getMenuOptionTitle() {
+    public String getTitle() {
         return "Logout";
     }
 
@@ -22,42 +20,36 @@ public class Logout implements MenuOption {
         System.out.println("------");
     }
 
-    public void createLoginMenuOption() {
-        Login login = new Login(userDB, menu, loggedInUser);
-        menu.addMenuOption(login);
-    }
-
     public void logUserOut() {
         loggedInUser.setLoggedInUser(null);
     }
 
-    public boolean checkUserInput(String userInput) {
+    public Page checkUserInput(String userInput) {
         System.out.println(" ");
-        if (userInput.equals("quit") || userInput.equals("back")) {
-            return false;
-        } else if (userInput.equals("logout")) {
-            logUserOut();
-            createLoginMenuOption();
-            return false;
-        } else {
-            return true;
+        if (userInput.equals("quit")) {
+            return null;
         }
+
+        if (userInput.equals("back")) {
+            return new Menu(loggedInUser);
+        }
+
+        if (userInput.equals("logout")) {
+            logUserOut();
+            return new Menu(loggedInUser);
+        }
+
+        System.out.println("Please select a valid option!");
+        return this;
     }
 
-    public String start() {
-        boolean running = true;
-        String userInput = null;
+    public Page start() {
+        printDescription();
 
-        while (running) {
-            printDescription();
+        System.out.println(" ");
+        System.out.println("What would you like to do? (logout/back/quit) ");
 
-            System.out.println(" ");
-            System.out.println("What would you like to do? (logout/back/quit) ");
-            userInput = scanner.nextLine().toLowerCase();
-
-            running = checkUserInput(userInput);
-
-        }
-        return userInput;
+        String userInput = scanner.nextLine();
+        return checkUserInput(userInput);
     }
 }
