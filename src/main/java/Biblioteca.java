@@ -11,10 +11,10 @@ public class Biblioteca {
     public static void main(String[] args) {
         printWelcomeMessage();
 
-        Page currentOption = new Menu(new LoggedInUser());;
+        Page currentOption = new Menu(new LoggedInUser(), new BorrowReturnList());
 
         while (true) {
-            Page newOption = currentOption.start();
+            Page newOption = currentOption.start(new ActionAsker());
             if (newOption != null) {
                 currentOption = newOption;
             } else {

@@ -1,15 +1,12 @@
-import sun.rmi.runtime.Log;
-
-import java.util.Scanner;
-
 public class Profile implements Page {
     private User user;
     private LoggedInUser loggedInUser;
-    private Scanner scanner = new Scanner(System.in);
+    private BorrowReturnList borrowReturnList;
 
-    public Profile(User user, LoggedInUser loggedInUser) {
+    public Profile(User user, LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
         this.user = user;
         this.loggedInUser = loggedInUser;
+        this.borrowReturnList = borrowReturnList;
     }
 
     public String getTitle() {
@@ -23,37 +20,35 @@ public class Profile implements Page {
         System.out.println(" ");
     }
 
-    public Page checkUserInput(String userInput) {
-        System.out.println(" ");
-        if (userInput.equals("quit")) {
-            return null;
-        }
-
-        if (userInput.equals("back")) {
-            return new Menu(loggedInUser);
-        }
-
-        System.out.println("Please select a valid option!");
-        return this;
-    }
-
     public void printProfile() {
         System.out.println("Name: " + user.getName());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Number: " + user.getNumber());
     }
 
-    public Page start() {
-        printDescription();
+    public Menu newMenu(LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
+        return new Menu(loggedInUser, borrowReturnList);
+    }
 
-        printProfile();
-
+    private Page checkUserInput(String userInput) {
         System.out.println(" ");
-        System.out.println("What would you like to do? (back/quit) ");
+        if (userInput.equals("quit")) {
+            return null;
+        }
 
-        String userInput = scanner.nextLine();
+        if (userInput.equals("back")) {
+            return newMenu(loggedInUser, borrowReturnList);
+        }
+
+        System.out.println("Please select a valid option!");
+        return this;
+    }
+
+    public Page start(ActionAsker actionAsker) {
+        printDescription();
+        printProfile();
+        String userInput = actionAsker.ask("What would you like to do? ");
         return checkUserInput(userInput);
-
     }
 
 }

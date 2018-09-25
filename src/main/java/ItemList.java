@@ -5,13 +5,14 @@ import java.util.Scanner;
 public class ItemList implements Page {
     private ArrayList<Item> itemList = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
-    private BorrowReturnList borrowReturnList = new BorrowReturnList();
+    private BorrowReturnList borrowReturnList;
     private String itemListName;
     private LoggedInUser loggedInUser;
 
-    public ItemList(String itemListName, LoggedInUser loggedInUser) {
+    public ItemList(String itemListName, LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
         this.itemListName = itemListName;
         this.loggedInUser = loggedInUser;
+        this.borrowReturnList = borrowReturnList;
     }
 
     public String getTitle() {
@@ -60,14 +61,18 @@ public class ItemList implements Page {
         return input.matches("borrow \\d+|return \\d+");
     }
 
-    public Page checkUserInput(String userInput) {
+    public Menu newMenu(LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
+        return new Menu(loggedInUser, borrowReturnList);
+    }
+
+    private Page checkUserInput(String userInput) {
         System.out.println(" ");
         if (userInput.equals("quit")) {
             return null;
         }
 
         if (userInput.equals("back")) {
-            return new Menu(loggedInUser);
+            return newMenu(loggedInUser, borrowReturnList);
         }
 
         if (isBorrowOrReturn(userInput)) {
@@ -79,14 +84,10 @@ public class ItemList implements Page {
         return this;
     }
 
-    public Page start() {
+    public Page start(ActionAsker actionAsker) {
         printDescription();
         printList();
-
-        System.out.println(" ");
-        System.out.println("What would you like to do? ");
-
-        String userInput = scanner.nextLine();
+        String userInput = actionAsker.ask("What would you like to do? ");
         return checkUserInput(userInput);
 
     }

@@ -1,34 +1,34 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Menu implements Page {
     private ArrayList<Page> menuList = new ArrayList<>();
     private LoggedInUser loggedInUser;
+    private BorrowReturnList borrowReturnList;
 
-    public Menu(LoggedInUser loggedInUser) {
+    public Menu(LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
         this.loggedInUser = loggedInUser;
+        this.borrowReturnList = borrowReturnList;
         initialise();
     }
 
     private void initialise() {
-        BookList bookList = new BookList(loggedInUser);
-        MovieList movieList = new MovieList(loggedInUser);
+        BookList bookList = new BookList(loggedInUser, borrowReturnList);
+        MovieList movieList = new MovieList(loggedInUser, borrowReturnList);
 
         addMenuOption(bookList);
         addMenuOption(movieList);
         addLoginOrLogout();
-
     }
 
     private void addLoginOrLogout() {
         UserDB userDB = new UserDB();
 
         if (loggedInUser.getLoggedInUser() == null) {
-            Login login = new Login(userDB, loggedInUser);
+            Login login = new Login(userDB, loggedInUser, borrowReturnList);
             addMenuOption(login);
         } else {
-            Logout logout = new Logout(userDB, loggedInUser);
-            Profile profile = new Profile(loggedInUser.getLoggedInUser(), loggedInUser);
+            Logout logout = new Logout(loggedInUser, borrowReturnList);
+            Profile profile = new Profile(loggedInUser.getLoggedInUser(), loggedInUser, borrowReturnList);
             addMenuOption(profile);
             addMenuOption(logout);
         }
@@ -82,15 +82,11 @@ public class Menu implements Page {
         return "Menu";
     }
 
-    public Page start() {
+    public Page start(ActionAsker actionAsker) {
         printDescription();
         printList();
 
-        System.out.println(" ");
-        System.out.println("What do you want to do?");
-        Scanner scanner = new Scanner(System.in);
-
-        String userInput = scanner.nextLine();
+        String userInput = actionAsker.ask("What do you want to do? ");
         return checkUserInput(userInput);
     }
 }

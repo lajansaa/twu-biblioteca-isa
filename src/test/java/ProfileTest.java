@@ -1,42 +1,31 @@
-import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import org.mockito.Mock;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class ProfileTest {
-    private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private User mockUser = new User();
-    private Profile mockProfile = new Profile(mockUser);
+    private User user = new User();
+    private LoggedInUser loggedInUser = new LoggedInUser();
+    private BorrowReturnList borrowReturnList = new BorrowReturnList();
 
-    @Before
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
-    }
+    @Mock
+    private Profile profile = spy( new Profile(user, loggedInUser, borrowReturnList));
 
-    @Before
-    public void setUpUser() {
-        mockUser.setName("Mock Name");
-        mockUser.setEmail("mock@mail.com");
-        mockUser.setNumber("9876543");
-        mockUser.setRole("librarian");
-        mockUser.setLibraryNumber("987-9876");
-        mockUser.setPassword("password");
-        mockUser.setLoginStatus(false);
-    }
     @Test
-    public void checkUserInput() {
+    public void startQuit() {
+        ActionAsker actionAsker = mock(ActionAsker.class);
+        when(actionAsker.ask("What would you like to do? ")).thenReturn("quit");
+        assertEquals(null, profile.start(actionAsker));
     }
 
     @Test
-    public void printProfile() {
-        String output = "Name: Mock Name\n";
-        output += "Email: mock@mail.com\n";
-        output += "Number: 9876543\n";
-        mockProfile.printProfile();
-        assertEquals(output, outContent.toString());
-    }
+    public void startBack() {
+        ActionAsker actionAsker = mock(ActionAsker.class);
+        when(actionAsker.ask("What would you like to do? ")).thenReturn("back");
+        doReturn(profile.start(actionAsker))
+                .when(profile)
+                .newMenu(loggedInUser, borrowReturnList);
 
+    }
 }

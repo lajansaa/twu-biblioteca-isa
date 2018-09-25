@@ -11,16 +11,8 @@ public class BorrowReturnListTest {
     }
 
     @Test
-    public void borrowItem() {
-
-    }
-
-    @Test
-    public void returnItem() {
-    }
-
-    @Test
     public void start() {
+
     }
 
 }

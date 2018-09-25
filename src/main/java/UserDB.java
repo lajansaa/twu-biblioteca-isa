@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UserDB {
-    private ArrayList<User> userList = new ArrayList<User>();
+    private ArrayList<User> userList = new ArrayList<>();
 
     public UserDB() {
         initialise();

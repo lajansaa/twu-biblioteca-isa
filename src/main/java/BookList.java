@@ -3,8 +3,8 @@ import java.util.Arrays;
 
 public class BookList extends ItemList {
 
-    public BookList(LoggedInUser loggedInUser) {
-        super("Book", loggedInUser);
+    public BookList(LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
+        super("Book", loggedInUser, borrowReturnList);
         initialise();
     }
 

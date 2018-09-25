@@ -16,7 +16,7 @@ public class BorrowReturnList {
         return index >= 0 && index < itemList.size();
     }
 
-    public void borrowItem(int itemIndex, String itemListName, ArrayList<Item> itemList, User borrower) {
+    private void borrowItem(int itemIndex, String itemListName, ArrayList<Item> itemList, User borrower) {
         Item toBorrowItem = itemList.get(itemIndex);
         if (!borrowedItemList.contains(toBorrowItem)) {
             borrowedItemList.add(toBorrowItem);
@@ -27,7 +27,7 @@ public class BorrowReturnList {
         }
     }
 
-    public void returnItem(int itemIndex, String itemListName, ArrayList<Item> itemList, User returner) {
+    private void returnItem(int itemIndex, String itemListName, ArrayList<Item> itemList, User returner) {
         Item toBorrowItem = itemList.get(itemIndex);
         if (borrowedItemList.contains(toBorrowItem)) {
             int borrowerIndex = borrowedItemList.indexOf(toBorrowItem);

@@ -1,5 +1,5 @@
 public interface Page {
     String getTitle();
-    Page start();
+    Page start(ActionAsker actionAsker);
     void printDescription();
 }

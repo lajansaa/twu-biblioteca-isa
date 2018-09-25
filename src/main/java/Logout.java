@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
 public class Logout implements Page {
-    private UserDB userDB;
     private LoggedInUser loggedInUser;
     private Scanner scanner = new Scanner(System.in);
+    private BorrowReturnList borrowReturnList;
 
-    public Logout(UserDB userDB, LoggedInUser loggedInUser) {
-        this.userDB = userDB;
+    public Logout(LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
         this.loggedInUser = loggedInUser;
+        this.borrowReturnList = borrowReturnList;
     }
 
     public String getTitle() {
@@ -31,25 +31,21 @@ public class Logout implements Page {
         }
 
         if (userInput.equals("back")) {
-            return new Menu(loggedInUser);
+            return new Menu(loggedInUser, borrowReturnList);
         }
 
         if (userInput.equals("logout")) {
             logUserOut();
-            return new Menu(loggedInUser);
+            return new Menu(loggedInUser, borrowReturnList);
         }
 
         System.out.println("Please select a valid option!");
         return this;
     }
 
-    public Page start() {
+    public Page start(ActionAsker actionAsker) {
         printDescription();
-
-        System.out.println(" ");
-        System.out.println("What would you like to do? (logout/back/quit) ");
-
-        String userInput = scanner.nextLine();
+        String userInput = actionAsker.ask("What would you like to do? (logout/back/quit) ");
         return checkUserInput(userInput);
     }
 }

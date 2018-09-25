@@ -4,10 +4,12 @@ public class Login implements Page {
     private UserDB userDB;
     private Scanner scanner = new Scanner(System.in);
     private LoggedInUser loggedInUser;
+    private BorrowReturnList borrowReturnList;
 
-    public Login(UserDB userDB, LoggedInUser loggedInUser) {
+    public Login(UserDB userDB, LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
         this.userDB = userDB;
         this.loggedInUser = loggedInUser;
+        this.borrowReturnList = borrowReturnList;
     }
 
     public String getTitle() {
@@ -20,33 +22,37 @@ public class Login implements Page {
         System.out.println("-----");
     }
 
-    public Page checkUserInput(String userInput) {
+    public Menu newMenu(LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
+        return new Menu(loggedInUser, borrowReturnList);
+    }
+
+    private Page checkUserInput(String userInput, ActionAsker actionAsker) {
         System.out.println(" ");
         if (userInput.equals("quit")) {
             return null;
         }
 
         if (userInput.equals("back")) {
-            return new Menu(loggedInUser);
+            return newMenu(loggedInUser, borrowReturnList);
         }
 
         if (userInput.equals("login")) {
-            return getCredentials();
+            return getCredentials(actionAsker);
         }
 
         System.out.println("Please select a valid option!");
         return this;
     }
 
-    public boolean isValidCredentials(User user, String userLibraryNumber, String userPassword) {
+    private boolean isValidCredentials(User user, String userLibraryNumber, String userPassword) {
         return user.getLibraryNumber().equals(userLibraryNumber) && user.getPassword().equals(userPassword);
     }
 
-    public Page checkCredentials(String userLibraryNumber, String userPassword) {
+    private Page checkCredentials(String userLibraryNumber, String userPassword) {
         for (User user : userDB.getUserList()) {
             if (isValidCredentials(user, userLibraryNumber, userPassword)) {
                 loggedInUser.setLoggedInUser(user);
-                return new Menu(loggedInUser);
+                return new Menu(loggedInUser, borrowReturnList);
             }
         }
         System.out.println(" ");
@@ -54,23 +60,19 @@ public class Login implements Page {
         return this;
     }
 
-    public Page getCredentials() {
-        System.out.println("Please enter the following:");
-        System.out.println(("Library Number (xxx-xxxx): "));
+    private Page getCredentials(ActionAsker actionAsker) {
+        actionAsker.ask("Please enter the following:");
+        actionAsker.ask("Library Number (xxx-xxxx): ");
         String userLibraryNumber = scanner.nextLine();
-        System.out.println(("Password: "));
+        actionAsker.ask(("Password: "));
         String userPassword = scanner.nextLine();
         return checkCredentials(userLibraryNumber, userPassword);
     }
 
-    public Page start() {
+    public Page start(ActionAsker actionAsker) {
         printDescription();
-
-        System.out.println(" ");
-        System.out.println("What would you like to do? (login/back/quit) ");
-
-        String userInput = scanner.nextLine();
-        return checkUserInput(userInput);
+        String userInput = actionAsker.ask("What would you like to do? (login/back/quit) ");
+        return checkUserInput(userInput, actionAsker);
 
     }
 }

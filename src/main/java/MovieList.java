@@ -6,8 +6,8 @@ public class MovieList extends ItemList {
     private LoggedInUser loggedInUser;
     private BorrowReturnList borrowReturnList;
 
-    public MovieList(LoggedInUser loggedInUser) {
-        super("Movie", loggedInUser);
+    public MovieList(LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
+        super("Movie", loggedInUser, borrowReturnList);
         this.movieList = this.getItemList();
         this.borrowReturnList = this.getBorrowReturnList();
         this.loggedInUser = loggedInUser;

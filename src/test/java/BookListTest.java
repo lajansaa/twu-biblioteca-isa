@@ -1,68 +1,87 @@
-import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mock;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
-@RunWith(Parameterized.class)
+@RunWith(Enclosed.class)
 public class BookListTest {
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private LoggedInUser loggedInUser = new LoggedInUser();
-    private BookList mockBookList = new BookList(loggedInUser);
 
-    enum Type {IsBorrowTest, IsBookValidTest, CheckUserInputTest, DummyTest};
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                {Type.DummyTest, "dummy", true},
-                {Type.IsBorrowTest, "borrow 1", true},
-                {Type.IsBorrowTest, "borrow1", false},
-                {Type.IsBookValidTest, "borrow 1", true},
-                {Type.IsBookValidTest, "borrow 4", false},
-                {Type.CheckUserInputTest, "quit", false},
-                {Type.CheckUserInputTest, "back", false},
-                {Type.CheckUserInputTest, "0", true},
-                {Type.CheckUserInputTest, "invalid", true}
-        });
-    }
-    private Type type;
-    private String input;
-    private boolean expected;
+    @RunWith(Parameterized.class)
+    public static class IsBorrowOrReturnTest {
+        private LoggedInUser loggedInUser = new LoggedInUser();
+        private BorrowReturnList borrowReturnList = new BorrowReturnList();
+        private BookList bookList = new BookList(loggedInUser, borrowReturnList);
 
-    public BookListTest(Type type, String input, boolean expected) {
-        this.type = type;
-        this.input = input;
-        this.expected = expected;
-    }
+        @Parameterized.Parameters
+        public static Collection<Object[]> data() {
+            return Arrays.asList(new Object[][]{
+                    {"borrow 1", true},
+                    {"borrow1", false},
+                    {"return 1", true}
+            });
+        }
 
-    @Before
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
+        private String input;
+        private boolean expected;
+
+        public IsBorrowOrReturnTest(String input, boolean expected) {
+            this.input = input;
+            this.expected = expected;
+        }
+
+        @Test
+        public void isBorrowOrReturn() {
+            assertEquals(expected, bookList.isBorrowOrReturn(input));
+        }
     }
 
-    @Test
-    public void printBookList() {
-        Assume.assumeTrue(type == Type.DummyTest);
-        mockBookList.printList();
-        assertEquals("1. Mock Book(2018): Available\n", outContent.toString());
-    }
+    @RunWith(Parameterized.class)
+    public static class StartTest {
+        private static LoggedInUser loggedInUser = new LoggedInUser();
+        private static BorrowReturnList borrowReturnList = new BorrowReturnList();
 
-    @Test
-    public void isBorrowOrReturn() {
-        Assume.assumeTrue(type == Type.IsBorrowTest);
-        assertEquals(expected, mockBookList.isBorrowOrReturn(input));
-    }
+        @Mock
+        private static BookList bookList = spy( new BookList(loggedInUser, borrowReturnList));
 
-    @Test
-    public void checkUserInput() {
-        Assume.assumeTrue(type == Type.CheckUserInputTest);
-        assertEquals(expected, mockBookList.checkUserInput(input));
+        @Parameterized.Parameters
+        public static Collection<Object[]> data() {
+            return Arrays.asList(new Object[][]{
+                    {"quit", null},
+                    {"borrow 1", bookList},
+                    {"invalid stuff", bookList}
+            });
+        }
+
+        private String input;
+        private Page expected;
+
+        public StartTest(String input, Page expected) {
+            this.input = input;
+            this.expected = expected;
+        }
+
+        @Test
+        public void start() {
+            ActionAsker actionAsker = mock(ActionAsker.class);
+            when(actionAsker.ask("What would you like to do? ")).thenReturn(input);
+            assertEquals(expected, bookList.start(actionAsker));
+        }
+
+        @Test
+        public void startWithBack() {
+            ActionAsker actionAsker = mock(ActionAsker.class);
+            when(actionAsker.ask("What would you like to do? ")).thenReturn("back");
+            doReturn(bookList.start(actionAsker))
+                    .when(bookList)
+                    .newMenu(loggedInUser, borrowReturnList);
+
+        }
     }
 }
