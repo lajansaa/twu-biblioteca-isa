@@ -1,4 +1,6 @@
-package PACKAGE_NAME;
-
-public interface Display {
+public class Display {
+    public static String println(String message) {
+        System.out.println(message);
+        return message;
+    }
 }
