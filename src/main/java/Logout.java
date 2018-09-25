@@ -1,8 +1,5 @@
-import java.util.Scanner;
-
 public class Logout implements Page {
     private LoggedInUser loggedInUser;
-    private Scanner scanner = new Scanner(System.in);
     private BorrowReturnList borrowReturnList;
 
     public Logout(LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
@@ -20,22 +17,22 @@ public class Logout implements Page {
         System.out.println("------");
     }
 
-    public void logUserOut() {
-        loggedInUser.setLoggedInUser(null);
+    public Menu newMenu(LoggedInUser loggedInUser, BorrowReturnList borrowReturnList) {
+        return new Menu(loggedInUser, borrowReturnList);
     }
 
-    public Page checkUserInput(String userInput) {
+    private Page checkUserInput(String userInput) {
         System.out.println(" ");
         if (userInput.equals("quit")) {
             return null;
         }
 
         if (userInput.equals("back")) {
-            return new Menu(loggedInUser, borrowReturnList);
+            return newMenu(loggedInUser, borrowReturnList);
         }
 
         if (userInput.equals("logout")) {
-            logUserOut();
+            loggedInUser.setLoggedInUser(null);
             return new Menu(loggedInUser, borrowReturnList);
         }
 

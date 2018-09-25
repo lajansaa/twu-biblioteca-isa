@@ -25,7 +25,19 @@ public class MovieList extends ItemList {
         }
     }
 
-    public void printList() {
+    private String printIfLibrarian(Movie movie) {
+        String output = "";
+        if (loggedInUser.getLoggedInUser() != null) {
+            boolean isLibrarian = loggedInUser.getLoggedInUser().getRole().equals("librarian");
+            boolean isItemUnavailable = !borrowReturnList.isItemAvailable(movie);
+            if (isLibrarian && isItemUnavailable) {
+                output += " (Borrowed by: " + borrowReturnList.getBorrower(movie).getName() + " - " + borrowReturnList.getBorrower(movie).getNumber() + ")";
+            }
+        }
+        return output;
+    }
+
+    public void printList(Display display) {
         for (int i = 0; i < movieList.size(); i++) {
             String output = (i + 1) + ". ";
             Movie movie = (Movie) movieList.get(i);
@@ -34,15 +46,9 @@ public class MovieList extends ItemList {
             output += movie.getDirector() + ", ";
             output += movie.getRating() + ": ";
             output += borrowReturnList.isItemAvailable(movie) ? "Available" : "Not Available";
+            output += printIfLibrarian(movie);
 
-            if (loggedInUser.getLoggedInUser() != null) {
-                boolean isLibrarian = loggedInUser.getLoggedInUser().getRole().equals("librarian");
-                boolean isItemUnavailable = !borrowReturnList.isItemAvailable(movie);
-                if (isLibrarian && isItemUnavailable) {
-                    output += " (Borrowed by: " + borrowReturnList.getBorrower(movie).getName() + " - " + borrowReturnList.getBorrower(movie).getNumber() + ")";
-                }
-            }
-            System.out.println(output);
+            display.println(output);
         }
     }
 }

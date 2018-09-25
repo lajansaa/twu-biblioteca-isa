@@ -11,6 +11,10 @@ public class Menu implements Page {
         initialise();
     }
 
+    public ArrayList<Page> getMenuList() {
+        return menuList;
+    }
+
     private void initialise() {
         BookList bookList = new BookList(loggedInUser, borrowReturnList);
         MovieList movieList = new MovieList(loggedInUser, borrowReturnList);

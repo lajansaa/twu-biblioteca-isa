@@ -29,7 +29,7 @@ public class ItemList implements Page {
         itemList.add(item);
     }
 
-    public void printList() {
+    public void printList(Display display) {
         for (int i = 0; i < itemList.size(); i++) {
             String output = (i + 1) + ". ";
             Item item = itemList.get(i);
@@ -41,7 +41,7 @@ public class ItemList implements Page {
                     output += " (Borrowed by: " + borrowReturnList.getBorrower(item).getName() + " - " + borrowReturnList.getBorrower(item).getNumber() + ") ";
                 }
             }
-            System.out.println(output);
+            display.println(output);
         }
     }
 
@@ -86,7 +86,7 @@ public class ItemList implements Page {
 
     public Page start(ActionAsker actionAsker) {
         printDescription();
-        printList();
+        printList(new Display());
         String userInput = actionAsker.ask("What would you like to do? ");
         return checkUserInput(userInput);
 
