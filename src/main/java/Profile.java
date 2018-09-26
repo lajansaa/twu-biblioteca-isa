@@ -47,7 +47,7 @@ public class Profile implements Page {
     public Page start(ActionAsker actionAsker) {
         printDescription();
         printProfile();
-        String userInput = actionAsker.ask("What would you like to do? ");
+        String userInput = actionAsker.ask("What would you like to do? (back/quit) ");
         return checkUserInput(userInput);
     }
 

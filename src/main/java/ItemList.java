@@ -1,10 +1,7 @@
 import java.util.ArrayList;
-import java.util.Scanner;
-
 
 public class ItemList implements Page {
     private ArrayList<Item> itemList = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
     private BorrowReturnList borrowReturnList;
     private String itemListName;
     private LoggedInUser loggedInUser;
@@ -76,7 +73,7 @@ public class ItemList implements Page {
         }
 
         if (isBorrowOrReturn(userInput)) {
-            borrowReturnList.start(userInput, itemListName, itemList, loggedInUser.getLoggedInUser());
+            borrowReturnList.start(userInput, itemListName, itemList, loggedInUser.getLoggedInUser(), new Display());
             return this;
         }
 

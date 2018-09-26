@@ -14,7 +14,7 @@ public class MovieList extends ItemList {
         initialise();
     }
 
-    public void initialise() {
+    private void initialise() {
         ArrayList<String> titleList = new ArrayList<>(Arrays.asList("Zootopia", "Big Hero 6", "The Incredibles"));
         ArrayList<String> yearList = new ArrayList<>(Arrays.asList("2016", "2014", "2004"));
         ArrayList<String> directorList = new ArrayList<>(Arrays.asList("Byron Howard", "Don Hall", "Brad Bird"));

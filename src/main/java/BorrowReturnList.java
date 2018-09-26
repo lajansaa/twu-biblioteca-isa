@@ -16,47 +16,47 @@ public class BorrowReturnList {
         return index >= 0 && index < itemList.size();
     }
 
-    private void borrowItem(int itemIndex, String itemListName, ArrayList<Item> itemList, User borrower) {
+    private void borrowItem(int itemIndex, String itemListName, ArrayList<Item> itemList, User borrower, Display display) {
         Item toBorrowItem = itemList.get(itemIndex);
         if (!borrowedItemList.contains(toBorrowItem)) {
             borrowedItemList.add(toBorrowItem);
             borrowerList.add(borrower);
-            System.out.println("Thank you! Enjoy the " + itemListName.toLowerCase() + "!");
+            display.println("Thank you! Enjoy the " + itemListName.toLowerCase() + "!");
         } else {
-            System.out.println("That " + itemListName.toLowerCase() + " is not available.");
+            display.println("That " + itemListName.toLowerCase() + " is not available.");
         }
     }
 
-    private void returnItem(int itemIndex, String itemListName, ArrayList<Item> itemList, User returner) {
+    private void returnItem(int itemIndex, String itemListName, ArrayList<Item> itemList, User returner, Display display) {
         Item toBorrowItem = itemList.get(itemIndex);
         if (borrowedItemList.contains(toBorrowItem)) {
             int borrowerIndex = borrowedItemList.indexOf(toBorrowItem);
             if (returner == borrowerList.get(borrowerIndex)) {
                 borrowerList.remove(borrowerIndex);
                 borrowedItemList.remove(borrowerIndex);
-                System.out.println("Thank you for returning the " + itemListName.toLowerCase() + ".");
+                display.println("Thank you for returning the " + itemListName.toLowerCase() + ".");
             } else {
-                System.out.println("You are not the borrower of this book.");
+                display.println("You are not the borrower of this book.");
             }
         } else {
-            System.out.println("That is not a valid " + itemListName.toLowerCase() + " to return.");
+            display.println("That is not a valid " + itemListName.toLowerCase() + " to return.");
         }
     }
 
-    public void start(String userInput, String itemListName, ArrayList<Item> itemList, User loggedInUser) {
+    public void start(String userInput, String itemListName, ArrayList<Item> itemList, User loggedInUser, Display display) {
         String action = getAction(userInput);
         int itemIndex = getItemIndex(userInput);
 
         if (loggedInUser == null) {
-            System.out.println("You need to login to borrow or return a book.");
+            display.println("You need to login to borrow or return a book.");
         } else if (isItemValid(itemIndex, itemList)) {
             if (action.equals("borrow")) {
-                borrowItem(itemIndex, itemListName, itemList, loggedInUser);
+                borrowItem(itemIndex, itemListName, itemList, loggedInUser, display);
             } else {
-                returnItem(itemIndex, itemListName, itemList, loggedInUser);
+                returnItem(itemIndex, itemListName, itemList, loggedInUser, display);
             }
         } else {
-            System.out.println("That is not a valid " + itemListName.toLowerCase() + " to return.");
+            display.println("That is not a valid " + itemListName.toLowerCase() + " to borrow or return.");
         }
     }
 

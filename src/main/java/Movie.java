@@ -16,4 +16,13 @@ public class Movie extends Item {
         return rating.toS();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Movie)) {
+            return false;
+        }
+        Movie movie2 = (Movie) obj;
+        return movie2.title.equals(title) && movie2.year.equals(year) && movie2.director.equals(director) && movie2.rating.equals(rating);
+    }
+
 }

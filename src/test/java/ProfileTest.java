@@ -15,14 +15,14 @@ public class ProfileTest {
     @Test
     public void startQuit() {
         ActionAsker actionAsker = mock(ActionAsker.class);
-        when(actionAsker.ask("What would you like to do? ")).thenReturn("quit");
+        when(actionAsker.ask("What would you like to do? (back/quit) ")).thenReturn("quit");
         assertEquals(null, profile.start(actionAsker));
     }
 
     @Test
     public void startBack() {
         ActionAsker actionAsker = mock(ActionAsker.class);
-        when(actionAsker.ask("What would you like to do? ")).thenReturn("back");
+        when(actionAsker.ask("What would you like to do? (back/quit) ")).thenReturn("back");
         doReturn(profile.start(actionAsker))
                 .when(profile)
                 .newMenu(loggedInUser, borrowReturnList);

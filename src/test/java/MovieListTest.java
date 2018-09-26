@@ -1,12 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class MovieListTest {
     private LoggedInUser loggedInUser = new LoggedInUser();
@@ -25,15 +21,10 @@ public class MovieListTest {
     @Test
     public void printList() {
         Display display = mock(Display.class);
-        LoggedInUser loggedInUser = mock(LoggedInUser.class);
-        BorrowReturnList borrowReturnList = mock(BorrowReturnList.class);
-        Movie movie = mock(Movie.class);
-        MovieList movieList = new MovieList(loggedInUser, borrowReturnList);
 
-        when(borrowReturnList.isItemAvailable(movie)).thenReturn(false);
-        when(loggedInUser.getLoggedInUser()).thenReturn(user);
-
+        borrowReturnList.start("borrow 1", "movie", movieList.getItemList(), user, display);
         movieList.printList(display);
-        verify(display).println("1. Zootopia (2016), Byron Howard, 8 / 10: Not Available (Borrowed by: Mock Name - 9876543)\n");
+
+        verify(display).println("1. Zootopia (2016), Byron Howard, 8 / 10: Not Available (Borrowed by: Mock Name - 9876543)");
     }
 }

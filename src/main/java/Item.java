@@ -1,6 +1,6 @@
 public class Item {
-    private String title;
-    private String year;
+    protected String title;
+    protected String year;
 
     public Item(String title, String year) {
         this.title = title;
