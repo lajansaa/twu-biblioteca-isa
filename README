@@ -1,69 +1,44 @@
 Project Structure
 =================
 
-1. BibliotecaApp.java:
-   - Contains main()
-   - Instantiates biblioteca
-   - Calls biblioteca's start method
-2. Biblitoeca.java:
-   - Instantiates menu and menuOptions
-   - Tracks if a user is logged in
-   - Calls menu's start method
-3. Menu.java:
-   - Contains menu options (interface) where start methods can be called
-4. MenuOption.java:
-   - 2 methods to implement: getMenuOptionTitle() and start()
+1. Biblitoeca.java:
+  - Contains main()
+  - Starts a while loop that will stop only if user quits
+  - Starts off with menu start
+2. Menu.java:
+  - Contains pages (interface) where start methods can be called
+  - Adds login or logout&profile options depending on whether anyone is logged in
+3. Page.java:
+  - 2 methods to implement: getTitle(), start(), printDescription()
+4. BorrowReturnList.java:
+   - Contains borrowedItemList that tracks borrowed items and borrowerList that tracks borrowers
 5. ItemList.java:
-    - A menu option that implements MenuOption interface
+    - A menu option that implements Page interface
     - A superclass of BookList.java and MovieList.java
     - Has an instance variable itemList that holds item objects
-    - Contains methods that allow users to print items in list, borrow and return items
 6. Item.java:
     - Contains methods to set title, year published and availability of item
     - A superclass of Book.java and Movie.java
-7. Helper.java:
-   - Reads user's command line input
+7. ActionAsker.java:
+   - Reads and returns user's command line input
+   - Used for dependency injection for testing
 8. User.java:
    - Contains instance variables name, email, number, role, loggedInStatus, libraryNumber, password
    - To log in as librarian (libraryNumber: 987-9876, password: librarian)
    - To log in as customer (libraryNumber: 123-1234, password: customer)
 9. Profile.java:
-   - A menu option that implements MenuOption interface
+   - A menu option that implements Page interface
    - Contains methods that displays user information only when logged in
 10. Login.java:
-    - A menu option that implements MenuOption interface
+    - A menu option that implements Page interface
     - Contains methods that validates user
 11. Logout.java:
-    - A menu option that implements MenuOption interface
+    - A menu option that implements Page interface
     - Contains methods that logs user out
+12. UserDB.java:
+    - Contains a database of users
+13. Display.java:
+    - Returns messages that get printed to console
+    - Used for dependency injection for testing
 
-
-Instructions to push your code to code.google.com
-=================================================
-1. Sign into GitHub and create a new repository
-        Repository name: twu-biblioteca-yourname
-        Privacy level: Public
-        Don't check "Initialize this repository with a README"
-        Add .gitignore: None
-        Add a license: Apache License 2.0
-
-2. Run 'git init' in the folder that was extracted from the downloaded .zip file, in order to
- initialize local repository.
-
-3. Make a local commit.
-    $ git add -A
-    $ git commit -m “Initial commit”
-
-(Dont forget to add the hidden .idea folder, as it will make opening your project in Intellij easier.)
-
-4. After you are done with the local commit, you can share your code with "The World" by pushing it to your
- GitHub repository.
-    $ git remote add origin https://github.com/<YOUR-GITHUB-USERNAME>/twu-biblioteca-<YOURNAME>
-    $ git push origin master
-
-Instructions to open your code in Intellij
-==========================================
-1. Go to File -> Open (or Open Project)
-2. Select the directory containing the code
-DONE !
 
